@@ -1,0 +1,44 @@
+name: Celestia
+options:
+  bundleIdPrefix: com.pcchiu2023
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    TARGETED_DEVICE_FAMILY: "1"
+    INFOPLIST_FILE: Celestia/Resources/Info.plist
+    DEVELOPMENT_TEAM: 6MB8Q7K6XJ
+
+packages:
+  mlx-swift-lm:
+    url: https://github.com/ml-explore/mlx-swift-lm
+    minorVersion: 2.29.1
+  SwissEphemeris:
+    url: https://github.com/vsmithers1087/SwissEphemeris.git
+    from: 0.0.99
+
+targets:
+  Celestia:
+    type: application
+    platform: iOS
+    sources: [Celestia]
+    dependencies:
+      - package: mlx-swift-lm
+        product: MLXLLM
+      - package: mlx-swift-lm
+        product: MLXLMCommon
+      - package: mlx-swift-lm
+        product: MLX
+      - package: SwissEphemeris
+        product: SwissEphemeris
+    resources:
+      - path: Celestia/Resources
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pcchiu2023.celestia
+        PRODUCT_NAME: Celestia
