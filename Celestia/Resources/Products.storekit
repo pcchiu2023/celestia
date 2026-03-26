@@ -1,0 +1,119 @@
+{
+  "identifier" : "celestia_products",
+  "type" : "Configuration",
+  "version" : 3,
+  "subscriptionGroups" : [
+    {
+      "id" : "celestia_star_pass",
+      "localizations" : [
+        {
+          "description" : "Unlimited readings, weekly forecasts, transit alerts",
+          "displayName" : "Star Pass",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "Star Pass",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "6.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "starpass_weekly_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Full access, billed weekly",
+              "displayName" : "Star Pass Weekly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "celestia_starpass_weekly",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "Star Pass Weekly",
+          "subscriptionGroupID" : "celestia_star_pass",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "starpass_monthly_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Full access, billed monthly",
+              "displayName" : "Star Pass Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "celestia_starpass_monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Star Pass Monthly",
+          "subscriptionGroupID" : "celestia_star_pass",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "99.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "starpass_yearly_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Full access, billed yearly — best value",
+              "displayName" : "Star Pass Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "celestia_starpass_yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Star Pass Yearly",
+          "subscriptionGroupID" : "celestia_star_pass",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "products" : [
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "tokens_5_001",
+      "localizations" : [
+        {
+          "description" : "5 star tokens for premium readings",
+          "displayName" : "5 Star Tokens",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "celestia_tokens_5",
+      "referenceName" : "5 Star Tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "tokens_30_001",
+      "localizations" : [
+        {
+          "description" : "30 star tokens for premium readings — best value",
+          "displayName" : "30 Star Tokens",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "celestia_tokens_30",
+      "referenceName" : "30 Star Tokens",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "celestia_001",
+    "_developerTeamID" : ""
+  }
+}
