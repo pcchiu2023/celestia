@@ -1,0 +1,606 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Begin Your Journey" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Begin Your Journey" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comienza tu viaje" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Comece sua jornada" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "旅を始めよう" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "여정을 시작하세요" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Commencez votre voyage" } }
+      }
+    },
+    "Your Personal AI Astrologer" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your Personal AI Astrologer" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu astrólogo personal con IA" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Seu astrólogo pessoal com IA" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "あなた専属のAI占星術師" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "나만의 AI 점성술사" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre astrologue IA personnel" } }
+      }
+    },
+    "100% on-device · Your data never leaves your phone" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "100% on-device · Your data never leaves your phone" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "100% en el dispositivo · Tus datos nunca salen de tu teléfono" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "100% no dispositivo · Seus dados nunca saem do seu celular" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "100%オンデバイス · データが端末の外に出ることはありません" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "100% 온디바이스 · 데이터가 휴대폰 밖으로 나가지 않습니다" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "100% sur l'appareil · Vos données ne quittent jamais votre téléphone" } }
+      }
+    },
+    "Choose Your Language" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose Your Language" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Elige tu idioma" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Escolha seu idioma" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "言語を選択" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "언어 선택" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Choisissez votre langue" } }
+      }
+    },
+    "Tell Me About You" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tell Me About You" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cuéntame sobre ti" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Me conte sobre você" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "あなたのことを教えて" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "당신에 대해 알려주세요" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Parlez-moi de vous" } }
+      }
+    },
+    "Your Name" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your Name" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu nombre" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Seu nome" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "お名前" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이름" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre nom" } }
+      }
+    },
+    "Birth Date" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Birth Date" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Fecha de nacimiento" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Data de nascimento" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "生年月日" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "생년월일" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Date de naissance" } }
+      }
+    },
+    "Birth Time" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Birth Time" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hora de nacimiento" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Hora de nascimento" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "出生時刻" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "출생 시각" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Heure de naissance" } }
+      }
+    },
+    "Birth City" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Birth City" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ciudad de nacimiento" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Cidade de nascimento" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "出生地" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "출생 도시" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ville de naissance" } }
+      }
+    },
+    "Today" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hoy" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Hoje" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오늘" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Aujourd'hui" } }
+      }
+    },
+    "Tarot" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tarot" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tarot" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Tarô" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タロット" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "타로" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tarot" } }
+      }
+    },
+    "Chat" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Chat" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Chat" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Chat" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "チャット" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "채팅" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Discussion" } }
+      }
+    },
+    "Match" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Match" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compatibilidad" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Compatibilidade" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "相性" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "궁합" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Compatibilité" } }
+      }
+    },
+    "Profile" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Profile" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Perfil" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Perfil" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プロフィール" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "프로필" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Profil" } }
+      }
+    },
+    "Today's Reading" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today's Reading" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Lectura de hoy" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Leitura de hoje" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日の占い" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오늘의 운세" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Lecture du jour" } }
+      }
+    },
+    "Energy Levels" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Energy Levels" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Niveles de energía" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Níveis de energia" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "エネルギーレベル" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "에너지 수준" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Niveaux d'énergie" } }
+      }
+    },
+    "Love" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Love" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Amor" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Amor" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "恋愛" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "연애" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Amour" } }
+      }
+    },
+    "Career" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Career" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Carrera" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Carreira" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "仕事" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "직업" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Carrière" } }
+      }
+    },
+    "Health" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Health" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Salud" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Saúde" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "健康" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "건강" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Santé" } }
+      }
+    },
+    "Spiritual" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Spiritual" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Espiritual" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Espiritual" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スピリチュアル" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "영적" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Spirituel" } }
+      }
+    },
+    "Lucky Elements" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Lucky Elements" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Elementos de la suerte" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Elementos da sorte" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ラッキーアイテム" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "행운의 요소" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Éléments porte-bonheur" } }
+      }
+    },
+    "Color" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Color" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Color" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Cor" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "色" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "색상" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Couleur" } }
+      }
+    },
+    "Number" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Number" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Número" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Número" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "数字" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "숫자" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nombre" } }
+      }
+    },
+    "Crystal" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Crystal" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cristal" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Cristal" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "クリスタル" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "크리스탈" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Cristal" } }
+      }
+    },
+    "Tarot Reading" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tarot Reading" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Lectura de tarot" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Leitura de tarô" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タロット占い" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "타로 리딩" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tirage de tarot" } }
+      }
+    },
+    "Let the cards reveal what the stars whisper" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Let the cards reveal what the stars whisper" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Deja que las cartas revelen lo que susurran las estrellas" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Deixe as cartas revelarem o que as estrelas sussurram" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カードが星のささやきを明かします" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "카드가 별들의 속삭임을 전해드립니다" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Laissez les cartes révéler ce que murmurent les étoiles" } }
+      }
+    },
+    "Draw Cards" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Draw Cards" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sacar cartas" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Tirar cartas" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カードを引く" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "카드 뽑기" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tirer les cartes" } }
+      }
+    },
+    "Your Question (optional)" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your Question (optional)" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu pregunta (opcional)" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Sua pergunta (opcional)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "あなたの質問（任意）" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "질문을 입력하세요 (선택사항)" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre question (facultatif)" } }
+      }
+    },
+    "New Reading" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "New Reading" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Nueva lectura" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Nova leitura" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "新しい占い" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "새 리딩" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nouveau tirage" } }
+      }
+    },
+    "Celestia's Interpretation" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Celestia's Interpretation" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Interpretación de Celestia" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Interpretação de Celestia" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Celestiaの解釈" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Celestia의 해석" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Interprétation de Celestia" } }
+      }
+    },
+    "Reading the cards..." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reading the cards..." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Leyendo las cartas..." } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Lendo as cartas..." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カードを読み取っています..." } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "카드를 읽고 있습니다..." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Lecture des cartes..." } }
+      }
+    },
+    "Ask Celestia" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Ask Celestia" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Pregunta a Celestia" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Pergunte à Celestia" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Celestiaに聞く" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Celestia에게 물어보기" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Demandez à Celestia" } }
+      }
+    },
+    "Type your question..." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Type your question..." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Escribe tu pregunta..." } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Digite sua pergunta..." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "質問を入力..." } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "질문을 입력하세요..." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tapez votre question..." } }
+      }
+    },
+    "Messages today" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Messages today" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Mensajes de hoy" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Mensagens de hoje" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日のメッセージ" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오늘의 메시지" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Messages du jour" } }
+      }
+    },
+    "Compatibility" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Compatibility" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compatibilidad" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Compatibilidade" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "相性診断" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "궁합" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Compatibilité" } }
+      }
+    },
+    "No Connections Yet" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No Connections Yet" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Aún sin conexiones" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Nenhuma conexão ainda" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "まだつながりがありません" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "아직 연결이 없습니다" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Aucune connexion pour le moment" } }
+      }
+    },
+    "Add someone to discover your cosmic compatibility" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add someone to discover your cosmic compatibility" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Añade a alguien para descubrir tu compatibilidad cósmica" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Adicione alguém para descobrir sua compatibilidade cósmica" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "誰かを追加して宇宙の相性を調べましょう" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "누군가를 추가하여 우주적 궁합을 알아보세요" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ajoutez quelqu'un pour découvrir votre compatibilité cosmique" } }
+      }
+    },
+    "Add Contact" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Contact" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Añadir contacto" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Adicionar contato" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "連絡先を追加" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "연락처 추가" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ajouter un contact" } }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Salvar" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer" } }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cancelar" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Cancelar" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "キャンセル" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "취소" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Annuler" } }
+      }
+    },
+    "Weekly Deep Reading" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Weekly Deep Reading" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Lectura semanal profunda" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Leitura semanal aprofundada" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "週間ディープリーディング" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "주간 심층 리딩" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Lecture hebdomadaire approfondie" } }
+      }
+    },
+    "A comprehensive forecast for your week ahead" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "A comprehensive forecast for your week ahead" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Un pronóstico completo para la semana que viene" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Uma previsão completa para a sua próxima semana" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "来週の総合的な運勢予報" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다가오는 한 주의 종합 운세" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Des prévisions complètes pour votre semaine à venir" } }
+      }
+    },
+    "Generate Weekly Reading" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Generate Weekly Reading" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Generar lectura semanal" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Gerar leitura semanal" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "週間占いを生成" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "주간 운세 생성" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Générer la lecture hebdomadaire" } }
+      }
+    },
+    "Save to Journal" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save to Journal" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar en el diario" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Salvar no diário" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日記に保存" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "일지에 저장" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer dans le journal" } }
+      }
+    },
+    "Saved to Journal" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Saved to Journal" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardado en el diario" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Salvo no diário" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日記に保存しました" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "일지에 저장되었습니다" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistré dans le journal" } }
+      }
+    },
+    "Journal" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Journal" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Diario" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Diário" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日記" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "일지" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Journal" } }
+      }
+    },
+    "Your Journal Awaits" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your Journal Awaits" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu diario te espera" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Seu diário está esperando" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日記が待っています" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "일지가 기다리고 있습니다" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre journal vous attend" } }
+      }
+    },
+    "Daily Horoscope" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Daily Horoscope" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Horóscopo diario" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Horóscopo diário" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日の星占い" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오늘의 별자리 운세" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Horoscope du jour" } }
+      }
+    },
+    "Weekly Reading" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Weekly Reading" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Lectura semanal" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Leitura semanal" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "週間占い" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "주간 운세" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Lecture hebdomadaire" } }
+      }
+    },
+    "Your Planets" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your Planets" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tus planetas" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Seus planetas" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "あなたの惑星" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "나의 행성" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Vos planètes" } }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Configurações" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "설정" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réglages" } }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Language" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Idioma" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Idioma" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "言語" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "언어" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Langue" } }
+      }
+    },
+    "Star Pass" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Star Pass" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Pase Estelar" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Passe Estelar" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スターパス" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "스타 패스" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Pass Étoile" } }
+      }
+    },
+    "Subscribe" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Subscribe" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Suscribirse" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Assinar" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "登録する" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "구독하기" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "S'abonner" } }
+      }
+    },
+    "Restore Purchases" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Restore Purchases" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Restaurar compras" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Restaurar compras" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "購入を復元" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "구매 복원" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Restaurer les achats" } }
+      }
+    },
+    "Or pay per reading" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Or pay per reading" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "O paga por lectura" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Ou pague por leitura" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "または都度払い" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "또는 리딩별 결제" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ou payez par lecture" } }
+      }
+    },
+    "tokens" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "tokens" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "tokens" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "tokens" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "トークン" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "토큰" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "jetons" } }
+      }
+    },
+    "Loading..." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Loading..." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cargando..." } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Carregando..." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "読み込み中..." } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "로딩 중..." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Chargement..." } }
+      }
+    },
+    "Error" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Error" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Error" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Erro" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "エラー" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오류" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Erreur" } }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Aceptar" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "확인" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "OK" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}
