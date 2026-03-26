@@ -6,6 +6,8 @@ import UserNotifications
 struct CelestiaApp: App {
     let modelContainer: ModelContainer
     @StateObject private var brain = CelestiaBrain()
+    @StateObject private var subscriptionManager = SubscriptionManager()
+    @StateObject private var tokenManager = TokenManager()
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -27,6 +29,11 @@ struct CelestiaApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(brain)
+                .environmentObject(subscriptionManager)
+                .environmentObject(tokenManager)
+                .onAppear {
+                    tokenManager.configure(modelContext: modelContainer.mainContext)
+                }
         }
         .modelContainer(modelContainer)
         .onChange(of: scenePhase) { _, newPhase in
@@ -37,7 +44,6 @@ struct CelestiaApp: App {
     private func handleScenePhase(_ phase: ScenePhase) {
         switch phase {
         case .background:
-            // Schedule transit alerts when app goes to background
             Task { @MainActor in
                 let context = modelContainer.mainContext
                 let descriptor = FetchDescriptor<UserProfile>(
@@ -52,8 +58,8 @@ struct CelestiaApp: App {
                 }
             }
         case .active:
-            // Clear badge when app becomes active
             UNUserNotificationCenter.current().setBadgeCount(0)
+            Task { await subscriptionManager.checkSubscriptionStatus() }
         default:
             break
         }
