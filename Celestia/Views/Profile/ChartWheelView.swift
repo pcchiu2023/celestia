@@ -54,7 +54,7 @@ struct ChartWheelView: View {
 
     private func drawHouses(context: GraphicsContext, center: CGPoint, radius: CGFloat) {
         for cusp in chart.houses {
-            let angle = degreesToAngle(cusp.longitude)
+            let angle = degreesToAngle(cusp.degree)
             let outerPoint = pointOnCircle(center: center, radius: radius, angle: angle)
             let innerPoint = pointOnCircle(center: center, radius: radius * 0.4, angle: angle)
 
@@ -88,8 +88,8 @@ struct ChartWheelView: View {
             guard let p1 = chart.planets.first(where: { $0.body == aspect.body1 }),
                   let p2 = chart.planets.first(where: { $0.body == aspect.body2 }) else { continue }
 
-            let angle1 = degreesToAngle(p1.longitude)
-            let angle2 = degreesToAngle(p2.longitude)
+            let angle1 = degreesToAngle(p1.degree)
+            let angle2 = degreesToAngle(p2.degree)
             let point1 = pointOnCircle(center: center, radius: radius, angle: angle1)
             let point2 = pointOnCircle(center: center, radius: radius, angle: angle2)
 
@@ -111,7 +111,7 @@ struct ChartWheelView: View {
 
     private func drawPlanets(context: GraphicsContext, center: CGPoint, radius: CGFloat) {
         for planet in chart.planets {
-            let angle = degreesToAngle(planet.longitude)
+            let angle = degreesToAngle(planet.degree)
             let point = pointOnCircle(center: center, radius: radius, angle: angle)
 
             let text = Text(planet.body.symbol).font(.system(size: 16, weight: .bold))

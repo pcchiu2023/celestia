@@ -58,7 +58,7 @@ final class ChartEngine {
         var placements: [PlanetPlacement] = []
 
         for (body, planet) in swissPlanets {
-            let coord = Coordinate<Planet>(planet: planet, date: date)
+            let coord = Coordinate<Planet>(body: planet, date: date)
             let lng = coord.longitude
             let sign = ZodiacSign.from(longitude: lng)
             let signDeg = lng.truncatingRemainder(dividingBy: 30.0)

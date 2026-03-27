@@ -18,10 +18,10 @@ final class TokenManager: ObservableObject {
     private func loadBalance() {
         guard let context = modelContext else { return }
         let descriptor = FetchDescriptor<TokenBalance>(
-            sortBy: [SortDescriptor(\.id)]
+            sortBy: [SortDescriptor(\.currentTokens)]
         )
         if let existing = try? context.fetch(descriptor).first {
-            balance = existing.balance
+            balance = existing.currentTokens
         } else {
             // Create initial balance (0 tokens)
             let initial = TokenBalance()
@@ -46,7 +46,7 @@ final class TokenManager: ObservableObject {
 
         let success = tokenBalance.spend(cost)
         if success {
-            balance = tokenBalance.balance
+            balance = tokenBalance.currentTokens
         }
         return success
     }
@@ -60,12 +60,12 @@ final class TokenManager: ObservableObject {
         let descriptor = FetchDescriptor<TokenBalance>()
         if let tokenBalance = try? context.fetch(descriptor).first {
             tokenBalance.add(amount)
-            balance = tokenBalance.balance
+            balance = tokenBalance.currentTokens
         } else {
             let newBalance = TokenBalance()
             newBalance.add(amount)
             context.insert(newBalance)
-            balance = newBalance.balance
+            balance = newBalance.currentTokens
         }
     }
 

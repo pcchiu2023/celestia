@@ -153,6 +153,6 @@ struct CompatibilityView: View {
     }
 
     private func sunLongitude(from contact: Contact) -> Double {
-        contact.chartData?.planets.first(where: { $0.body == .sun })?.longitude ?? 0
+        contact.chartData?.planets.first(where: { $0.body == .sun })?.degree ?? 0
     }
 }
