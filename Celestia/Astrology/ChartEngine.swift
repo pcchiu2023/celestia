@@ -77,7 +77,7 @@ final class ChartEngine {
         }
 
         // Lunar nodes
-        let northNode = Coordinate<LunarNorthNode>(date: date)
+        let northNode = Coordinate<LunarNorthNode>(body: .meanNode, date: date)
         let nnLng = northNode.longitude
         let nnSign = ZodiacSign.from(longitude: nnLng)
         placements.append(PlanetPlacement(
@@ -113,14 +113,14 @@ final class ChartEngine {
             houseSystem: .placidus
         )
 
-        let cuspProperties: [KeyPath<HouseCusps, Coordinate<House>>] = [
+        let cuspProperties: [KeyPath<HouseCusps, Cusp>] = [
             \.first, \.second, \.third, \.fourth, \.fifth, \.sixth,
             \.seventh, \.eighth, \.ninth, \.tenth, \.eleventh, \.twelfth
         ]
 
         return cuspProperties.enumerated().map { index, keyPath in
-            let coord = cusps[keyPath: keyPath]
-            let lng = coord.longitude
+            let cusp = cusps[keyPath: keyPath]
+            let lng = cusp.tropical.value
             return HouseCuspData(
                 house: index + 1,
                 sign: ZodiacSign.from(longitude: lng),
@@ -182,11 +182,11 @@ final class ChartEngine {
     }
 
     private func extractCuspDegrees(_ cusps: HouseCusps) -> [Double] {
-        let keyPaths: [KeyPath<HouseCusps, Coordinate<House>>] = [
+        let keyPaths: [KeyPath<HouseCusps, Cusp>] = [
             \.first, \.second, \.third, \.fourth, \.fifth, \.sixth,
             \.seventh, \.eighth, \.ninth, \.tenth, \.eleventh, \.twelfth
         ]
-        return keyPaths.map { cusps[keyPath: $0].longitude }
+        return keyPaths.map { cusps[keyPath: $0].tropical.value }
     }
 }
 

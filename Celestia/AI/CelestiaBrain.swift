@@ -62,7 +62,7 @@ final class CelestiaBrain: ObservableObject {
                 switch generation {
                 case .chunk(let text):
                     fullResponse += text
-                case .done:
+                case .info, .toolCall:
                     break
                 }
             }
