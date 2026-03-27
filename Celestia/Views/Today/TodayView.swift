@@ -3,12 +3,17 @@ import SwiftData
 
 struct TodayView: View {
     @EnvironmentObject var brain: CelestiaBrain
+    @EnvironmentObject var stardustManager: StardustManager
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @Environment(\.modelContext) private var modelContext
     @Query private var profiles: [UserProfile]
     @State private var todayReading: ParsedReading?
     @State private var isLoading = false
+    @State private var dailyRewardEarned: Int = 0
+    @State private var showRewardBanner = false
 
     private var profile: UserProfile? { profiles.first }
+    private var isSubscriber: Bool { subscriptionManager.isSubscribed }
 
     var body: some View {
         ZStack {
@@ -16,6 +21,9 @@ struct TodayView: View {
 
             ScrollView {
                 VStack(spacing: 24) {
+                    // Stardust balance bar
+                    stardustBar
+
                     // Header
                     if let profile {
                         Text("☽ Good \(timeOfDay), \(profile.name)")
@@ -29,57 +37,22 @@ struct TodayView: View {
                         }
                     }
 
+                    // Daily reward banner
+                    if showRewardBanner {
+                        dailyRewardBanner
+                    }
+
                     // Daily Reading Card
                     if isLoading {
-                        ProgressView("Reading the stars...")
-                            .foregroundColor(CelestiaTheme.textSecondary)
-                            .padding(40)
+                        CosmicLoadingView(message: "Reading the stars...")
                     } else if let reading = todayReading {
-                        VStack(alignment: .leading, spacing: 16) {
-                            Text("TODAY'S READING")
-                                .font(CelestiaTheme.captionFont)
-                                .foregroundColor(CelestiaTheme.gold)
-
-                            Text(reading.reading)
-                                .font(CelestiaTheme.bodyFont)
-                                .foregroundColor(CelestiaTheme.textPrimary)
-                                .lineSpacing(4)
-
-                            if !reading.actionAdvice.isEmpty {
-                                Text("✧ \(reading.actionAdvice)")
-                                    .font(CelestiaTheme.captionFont)
-                                    .foregroundColor(CelestiaTheme.gold)
-                                    .italic()
+                        ReadingRevealView {
+                            VStack(spacing: 16) {
+                                readingCard(reading)
+                                energyMeters(reading)
+                                luckyElements(reading)
                             }
                         }
-                        .padding(20)
-                        .background(Color.white.opacity(0.05))
-                        .cornerRadius(16)
-
-                        // Energy Meters
-                        VStack(spacing: 12) {
-                            Text("COSMIC ENERGY")
-                                .font(CelestiaTheme.captionFont)
-                                .foregroundColor(CelestiaTheme.gold)
-
-                            EnergyMeterView(label: "Love", value: reading.energyLove, color: .pink)
-                            EnergyMeterView(label: "Career", value: reading.energyCareer, color: CelestiaTheme.gold)
-                            EnergyMeterView(label: "Health", value: reading.energyHealth, color: .green)
-                            EnergyMeterView(label: "Spiritual", value: reading.energySpiritual, color: CelestiaTheme.purple)
-                        }
-                        .padding(20)
-                        .background(Color.white.opacity(0.05))
-                        .cornerRadius(16)
-
-                        // Lucky Elements
-                        HStack(spacing: 16) {
-                            luckyItem(icon: "paintpalette", label: reading.luckyColor)
-                            luckyItem(icon: "number", label: "\(reading.luckyNumber)")
-                            luckyItem(icon: "sparkle", label: reading.luckyCrystal)
-                        }
-                        .padding(16)
-                        .background(Color.white.opacity(0.05))
-                        .cornerRadius(16)
                     }
                 }
                 .padding(.horizontal, 20)
@@ -87,7 +60,136 @@ struct TodayView: View {
             }
         }
         .task {
+            claimDailyReward()
             await loadTodayReading()
+        }
+    }
+
+    // MARK: - Stardust Bar
+
+    private var stardustBar: some View {
+        HStack {
+            Image(systemName: "sparkle")
+                .foregroundStyle(CelestiaTheme.gold)
+            Text("\(stardustManager.balance)")
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundStyle(CelestiaTheme.gold)
+            Text("Stardust")
+                .font(CelestiaTheme.captionFont)
+                .foregroundStyle(CelestiaTheme.textSecondary)
+
+            Spacer()
+
+            if stardustManager.streak > 0 {
+                HStack(spacing: 4) {
+                    Image(systemName: "flame.fill")
+                        .foregroundStyle(.orange)
+                        .font(.system(size: 12))
+                    Text("\(stardustManager.streak) day streak")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(CelestiaTheme.textSecondary)
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(Color.white.opacity(0.05))
+        .cornerRadius(12)
+    }
+
+    // MARK: - Daily Reward Banner
+
+    private var dailyRewardBanner: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "gift.fill")
+                .foregroundStyle(CelestiaTheme.gold)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Daily Stardust!")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(CelestiaTheme.textPrimary)
+                Text("+\(dailyRewardEarned) ✦ earned")
+                    .font(.system(size: 12))
+                    .foregroundStyle(CelestiaTheme.gold)
+            }
+            Spacer()
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(CelestiaTheme.gold.opacity(0.08))
+        )
+        .transition(.move(edge: .top).combined(with: .opacity))
+    }
+
+    // MARK: - Reading Card
+
+    private func readingCard(_ reading: ParsedReading) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("TODAY'S READING")
+                .font(CelestiaTheme.captionFont)
+                .foregroundColor(CelestiaTheme.gold)
+
+            Text(reading.reading)
+                .font(CelestiaTheme.bodyFont)
+                .foregroundColor(CelestiaTheme.textPrimary)
+                .lineSpacing(4)
+
+            if !reading.actionAdvice.isEmpty {
+                Text("✧ \(reading.actionAdvice)")
+                    .font(CelestiaTheme.captionFont)
+                    .foregroundColor(CelestiaTheme.gold)
+                    .italic()
+            }
+        }
+        .padding(20)
+        .background(Color.white.opacity(0.05))
+        .cornerRadius(16)
+    }
+
+    // MARK: - Energy Meters
+
+    private func energyMeters(_ reading: ParsedReading) -> some View {
+        VStack(spacing: 12) {
+            Text("COSMIC ENERGY")
+                .font(CelestiaTheme.captionFont)
+                .foregroundColor(CelestiaTheme.gold)
+
+            EnergyMeterView(label: "Love", value: reading.energyLove, color: .pink)
+            EnergyMeterView(label: "Career", value: reading.energyCareer, color: CelestiaTheme.gold)
+            EnergyMeterView(label: "Health", value: reading.energyHealth, color: .green)
+            EnergyMeterView(label: "Spiritual", value: reading.energySpiritual, color: CelestiaTheme.purple)
+        }
+        .padding(20)
+        .background(Color.white.opacity(0.05))
+        .cornerRadius(16)
+    }
+
+    // MARK: - Lucky Elements
+
+    private func luckyElements(_ reading: ParsedReading) -> some View {
+        HStack(spacing: 16) {
+            luckyItem(icon: "paintpalette", label: reading.luckyColor)
+            luckyItem(icon: "number", label: "\(reading.luckyNumber)")
+            luckyItem(icon: "sparkle", label: reading.luckyCrystal)
+        }
+        .padding(16)
+        .background(Color.white.opacity(0.05))
+        .cornerRadius(16)
+    }
+
+    // MARK: - Actions
+
+    private func claimDailyReward() {
+        let earned = stardustManager.claimDailyReward()
+        if earned > 0 {
+            dailyRewardEarned = earned
+            withAnimation(.spring()) {
+                showRewardBanner = true
+            }
+            // Auto-hide after 4 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                withAnimation { showRewardBanner = false }
+            }
         }
     }
 
@@ -116,7 +218,10 @@ struct TodayView: View {
         // Generate new reading
         isLoading = true
         let generator = ReadingGenerator(brain: brain)
-        let parsed = await generator.generateDailyReading(profile: profile, modelContext: modelContext)
+        let parsed = await generator.generateDailyReading(
+            profile: profile, modelContext: modelContext,
+            isDetailed: isSubscriber
+        )
 
         // Save to SwiftData
         let reading = Reading(

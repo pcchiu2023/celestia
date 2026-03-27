@@ -3,23 +3,38 @@ import SwiftData
 
 struct ChatView: View {
     @EnvironmentObject var brain: CelestiaBrain
+    @EnvironmentObject var stardustManager: StardustManager
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \ChatMessage.createdAt) private var messages: [ChatMessage]
     @Query private var profiles: [UserProfile]
     @State private var inputText = ""
     @State private var isGenerating = false
+    @State private var showPaywall = false
 
     private var profile: UserProfile? { profiles.first }
+    private var isSubscriber: Bool { subscriptionManager.isSubscribed }
 
-    // Daily message limit for free users
+    // Daily free message count
     private var todayMessageCount: Int {
         let today = Calendar.current.startOfDay(for: Date())
         return messages.filter { $0.role == "user" && $0.createdAt >= today }.count
     }
 
+    // Free users get 1/day, subscribers get unlimited (0 cost)
+    private var canSendFree: Bool {
+        isSubscriber || todayMessageCount < 1
+    }
+
+    // Can send if free message available OR has stardust
     private var canSendMessage: Bool {
-        let isSubscribed = profile?.subscriptionTier != "free"
-        return isSubscribed || todayMessageCount < 5
+        canSendFree || stardustManager.canAfford(StardustManager.costs["chat"] ?? 1)
+    }
+
+    private var messageStatusText: String {
+        if isSubscriber { return "Unlimited ✧" }
+        if todayMessageCount < 1 { return "1 free today" }
+        return "\(stardustManager.balance) ✦ available"
     }
 
     var body: some View {
@@ -33,15 +48,10 @@ struct ChatView: View {
                         .font(CelestiaTheme.subheadingFont)
                         .foregroundColor(CelestiaTheme.gold)
                     Spacer()
-                    if !canSendMessage {
-                        Text("5/5 today")
-                            .font(CelestiaTheme.captionFont)
-                            .foregroundColor(.red)
-                    } else if profile?.subscriptionTier == "free" {
-                        Text("\(todayMessageCount)/5 today")
-                            .font(CelestiaTheme.captionFont)
-                            .foregroundColor(CelestiaTheme.textSecondary)
-                    }
+
+                    Text(messageStatusText)
+                        .font(CelestiaTheme.captionFont)
+                        .foregroundColor(canSendMessage ? CelestiaTheme.textSecondary : .red)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
@@ -56,11 +66,9 @@ struct ChatView: View {
                             }
                             if isGenerating {
                                 HStack {
-                                    ProgressView()
-                                        .tint(CelestiaTheme.purple)
-                                    Text("Reading the stars...")
-                                        .font(CelestiaTheme.captionFont)
-                                        .foregroundColor(CelestiaTheme.textSecondary)
+                                    CosmicLoadingView(message: "Consulting the cosmos...")
+                                        .scaleEffect(0.5)
+                                        .frame(height: 80)
                                     Spacer()
                                 }
                                 .padding(.horizontal, 20)
@@ -103,6 +111,9 @@ struct ChatView: View {
                 .background(CelestiaTheme.navy)
             }
         }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView(trigger: "chat")
+        }
     }
 
     private func sendMessage() async {
@@ -118,6 +129,15 @@ struct ChatView: View {
             inputText = ""
             return
         case .allowed(let filtered):
+            // Charge stardust if not free
+            if !canSendFree {
+                let cost = StardustManager.costs["chat"] ?? 1
+                if !stardustManager.spend(cost) {
+                    showPaywall = true
+                    return
+                }
+            }
+
             inputText = ""
 
             // Save user message

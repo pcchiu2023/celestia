@@ -4,6 +4,7 @@ import SwiftData
 struct ProfileView: View {
     @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
     @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @EnvironmentObject var stardustManager: StardustManager
 
     @State private var showPaywall = false
 
@@ -21,7 +22,9 @@ struct ProfileView: View {
                             bigThreeSection(chart)
                             planetListSection(chart)
                         }
+                        stardustSection
                         subscriptionSection
+                        referralSection
                         settingsSection
                     }
                     .padding()
@@ -33,6 +36,7 @@ struct ProfileView: View {
             .sheet(isPresented: $showPaywall) {
                 PaywallView(trigger: "profile")
                     .environmentObject(subscriptionManager)
+                    .environmentObject(stardustManager)
             }
         }
     }
@@ -145,6 +149,71 @@ struct ProfileView: View {
         )
     }
 
+    // MARK: - Stardust Balance
+
+    private var stardustSection: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "sparkle")
+                    .foregroundStyle(CelestiaTheme.gold)
+                Text("Stardust")
+                    .font(CelestiaTheme.bodyFont)
+                    .fontWeight(.medium)
+                    .foregroundStyle(CelestiaTheme.textPrimary)
+                Spacer()
+                Text("\(stardustManager.balance) \u{2726}")
+                    .font(CelestiaTheme.bodyFont)
+                    .fontWeight(.bold)
+                    .foregroundStyle(CelestiaTheme.gold)
+            }
+
+            HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Streak")
+                        .font(CelestiaTheme.captionFont)
+                        .foregroundStyle(CelestiaTheme.textSecondary)
+                    Text("\(stardustManager.streak) days")
+                        .font(CelestiaTheme.bodyFont)
+                        .foregroundStyle(CelestiaTheme.textPrimary)
+                }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("Balance")
+                        .font(CelestiaTheme.captionFont)
+                        .foregroundStyle(CelestiaTheme.textSecondary)
+                    Text("\(stardustManager.balance) \u{2726}")
+                        .font(CelestiaTheme.bodyFont)
+                        .foregroundStyle(CelestiaTheme.textPrimary)
+                }
+            }
+
+            if !stardustManager.dailyRewardClaimed {
+                Button {
+                    _ = stardustManager.claimDailyReward()
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "gift.fill")
+                        Text("Claim Daily +2 \u{2726}")
+                    }
+                    .font(CelestiaTheme.captionFont)
+                    .fontWeight(.medium)
+                    .foregroundStyle(CelestiaTheme.navy)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(CelestiaTheme.gold)
+                    )
+                }
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color.white.opacity(0.05))
+        )
+    }
+
     // MARK: - Subscription
 
     private var subscriptionSection: some View {
@@ -182,6 +251,51 @@ struct ProfileView: View {
                     .fill(Color.white.opacity(0.05))
             )
         }
+    }
+
+    // MARK: - Referral
+
+    private var referralSection: some View {
+        VStack(spacing: 10) {
+            HStack {
+                Image(systemName: "person.2.fill")
+                    .foregroundStyle(CelestiaTheme.gold)
+                Text("Refer a Friend")
+                    .font(CelestiaTheme.bodyFont)
+                    .fontWeight(.medium)
+                    .foregroundStyle(CelestiaTheme.textPrimary)
+                Spacer()
+                Text("Earn 15 \u{2726}")
+                    .font(CelestiaTheme.captionFont)
+                    .foregroundStyle(CelestiaTheme.gold)
+            }
+
+            if let code = profile?.referralCode {
+                HStack {
+                    Text(code)
+                        .font(.system(size: 18, weight: .bold, design: .monospaced))
+                        .foregroundStyle(CelestiaTheme.gold)
+                    Spacer()
+                    Button {
+                        UIPasteboard.general.string = code
+                    } label: {
+                        Image(systemName: "doc.on.doc")
+                            .font(.caption)
+                            .foregroundStyle(CelestiaTheme.textSecondary)
+                    }
+                }
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.white.opacity(0.03))
+                )
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color.white.opacity(0.05))
+        )
     }
 
     // MARK: - Settings

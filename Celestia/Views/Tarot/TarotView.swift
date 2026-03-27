@@ -3,10 +3,11 @@ import SwiftData
 
 struct TarotView: View {
     @EnvironmentObject var brain: CelestiaBrain
+    @EnvironmentObject var stardustManager: StardustManager
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
     @Query(sort: \TarotReading.createdAt, order: .reverse) private var pastReadings: [TarotReading]
-    @Query private var tokenBalances: [TokenBalance]
 
     @State private var selectedSpread: SpreadType = .threeCard
     @State private var drawnCards: [DrawnCardData] = []
@@ -19,8 +20,6 @@ struct TarotView: View {
 
     private var profile: UserProfile? { profiles.first }
 
-    private var tokenBalance: TokenBalance? { tokenBalances.first }
-
     private var readingGenerator: ReadingGenerator {
         ReadingGenerator(brain: brain)
     }
@@ -29,44 +28,18 @@ struct TarotView: View {
         hasDrawn && revealedIndices.count >= drawnCards.count
     }
 
-    // MARK: - Free Tier Logic
+    // MARK: - Stardust Cost
 
-    /// Check if the user has used their free weekly reading
-    private var freeReadingUsedThisWeek: Bool {
-        let calendar = Calendar.current
-        guard let weekStart = calendar.dateInterval(of: .weekOfYear, for: Date())?.start else {
-            return false
+    private var stardustCost: Int {
+        switch selectedSpread {
+        case .single: return StardustManager.costs["tarot_single"] ?? 2
+        case .threeCard: return StardustManager.costs["tarot_3card"] ?? 5
+        case .celticCross: return StardustManager.costs["tarot_celtic"] ?? 10
         }
-        return pastReadings.contains { $0.createdAt >= weekStart }
     }
 
-    /// Whether the selected spread requires tokens (not free, or free limit exhausted)
-    private var requiresTokens: Bool {
-        if selectedSpread.tokenCost == 0 {
-            // Single card is free once per day; but we gate weekly for free tier
-            return freeReadingUsedThisWeek
-        }
-        return true
-    }
-
-    /// The effective token cost considering free tier
-    private var effectiveTokenCost: Int {
-        if !freeReadingUsedThisWeek && selectedSpread == .single {
-            return 0
-        }
-        // If free reading used, single card costs 1 token
-        if selectedSpread == .single {
-            return 1
-        }
-        return selectedSpread.tokenCost
-    }
-
-    /// Whether the user can afford the current spread
     private var canAfford: Bool {
-        let cost = effectiveTokenCost
-        if cost == 0 { return true }
-        guard let balance = tokenBalance else { return false }
-        return balance.currentTokens >= cost
+        stardustManager.canAfford(stardustCost)
     }
 
     var body: some View {
@@ -74,11 +47,7 @@ struct TarotView: View {
             VStack(spacing: 24) {
                 headerSection
                 spreadPicker
-
-                if requiresTokens {
-                    tokenCostBanner
-                }
-
+                stardustCostBanner
                 questionField
                 drawButton
 
@@ -92,6 +61,9 @@ struct TarotView: View {
             .padding()
         }
         .background(CelestiaTheme.darkBg.ignoresSafeArea())
+        .sheet(isPresented: $showPaywall) {
+            PaywallView(trigger: "tarot_\(selectedSpread.rawValue)")
+        }
     }
 
     // MARK: - Header
@@ -109,18 +81,6 @@ struct TarotView: View {
             Text("Let the cards reveal what the stars whisper")
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
-
-            if !freeReadingUsedThisWeek {
-                Text("1 free reading this week")
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundStyle(.green)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(
-                        Capsule()
-                            .fill(.green.opacity(0.12))
-                    )
-            }
         }
         .padding(.top, 8)
     }
@@ -131,9 +91,7 @@ struct TarotView: View {
         VStack(spacing: 12) {
             ForEach(SpreadType.allCases, id: \.rawValue) { spread in
                 Button {
-                    if !hasDrawn {
-                        selectedSpread = spread
-                    }
+                    if !hasDrawn { selectedSpread = spread }
                 } label: {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
@@ -141,7 +99,6 @@ struct TarotView: View {
                                 .font(CelestiaTheme.bodyFont)
                                 .fontWeight(.medium)
                                 .foregroundStyle(CelestiaTheme.textPrimary)
-
                             Text("\(spread.cardCount) card\(spread.cardCount == 1 ? "" : "s")")
                                 .font(CelestiaTheme.captionFont)
                                 .foregroundStyle(CelestiaTheme.textSecondary)
@@ -164,9 +121,7 @@ struct TarotView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
                             .strokeBorder(
-                                selectedSpread == spread
-                                    ? CelestiaTheme.gold.opacity(0.5)
-                                    : Color.clear,
+                                selectedSpread == spread ? CelestiaTheme.gold.opacity(0.5) : Color.clear,
                                 lineWidth: 1
                             )
                     )
@@ -178,69 +133,38 @@ struct TarotView: View {
 
     @ViewBuilder
     private func costLabel(for spread: SpreadType) -> some View {
-        if spread == .single && !freeReadingUsedThisWeek {
-            Text("Free")
-                .font(CelestiaTheme.captionFont)
-                .foregroundStyle(.green)
-        } else if spread == .single && freeReadingUsedThisWeek {
-            Text("1 token")
-                .font(CelestiaTheme.captionFont)
-                .foregroundStyle(CelestiaTheme.gold)
-        } else {
-            Text("\(spread.tokenCost) tokens")
-                .font(CelestiaTheme.captionFont)
-                .foregroundStyle(CelestiaTheme.gold)
+        let cost: Int
+        switch spread {
+        case .single: cost = StardustManager.costs["tarot_single"] ?? 2
+        case .threeCard: cost = StardustManager.costs["tarot_3card"] ?? 5
+        case .celticCross: cost = StardustManager.costs["tarot_celtic"] ?? 10
         }
+        Text("\(cost) ✦")
+            .font(CelestiaTheme.captionFont)
+            .foregroundStyle(CelestiaTheme.gold)
     }
 
-    // MARK: - Token Cost Banner
+    // MARK: - Stardust Cost Banner
 
-    private var tokenCostBanner: some View {
-        VStack(spacing: 8) {
-            if !canAfford {
-                HStack(spacing: 8) {
-                    Image(systemName: "star.circle")
-                        .foregroundStyle(CelestiaTheme.gold)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("You've used your free weekly reading")
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundStyle(CelestiaTheme.textPrimary)
-                        Text("Get Star Pass for unlimited readings, or use \(effectiveTokenCost) token\(effectiveTokenCost == 1 ? "" : "s")")
-                            .font(.system(size: 12))
-                            .foregroundStyle(CelestiaTheme.textSecondary)
-                    }
-                    Spacer()
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(CelestiaTheme.gold.opacity(0.08))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .strokeBorder(CelestiaTheme.gold.opacity(0.25), lineWidth: 1)
-                )
-            } else {
-                HStack(spacing: 6) {
-                    Image(systemName: "sparkle")
-                        .font(.system(size: 11))
-                        .foregroundStyle(CelestiaTheme.gold)
-                    Text("This reading costs \(effectiveTokenCost) token\(effectiveTokenCost == 1 ? "" : "s")")
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(CelestiaTheme.textSecondary)
-                    Spacer()
-                    Text("\(tokenBalance?.currentTokens ?? 0) available")
-                        .font(.system(size: 12))
-                        .foregroundStyle(CelestiaTheme.gold)
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.white.opacity(0.03))
-                )
-            }
+    private var stardustCostBanner: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "sparkle")
+                .font(.system(size: 11))
+                .foregroundStyle(CelestiaTheme.gold)
+            Text("This reading costs \(stardustCost) ✦")
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(CelestiaTheme.textSecondary)
+            Spacer()
+            Text("\(stardustManager.balance) ✦ available")
+                .font(.system(size: 12))
+                .foregroundStyle(canAfford ? CelestiaTheme.gold : .red)
         }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.white.opacity(0.03))
+        )
     }
 
     // MARK: - Question Field
@@ -278,31 +202,23 @@ struct TarotView: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "wand.and.stars")
-                        Text(requiresTokens && !canAfford ? "Not Enough Tokens" : "Draw Cards")
+                        Text(canAfford ? "Draw Cards (\(stardustCost) ✦)" : "Not Enough Stardust")
                             .fontWeight(.semibold)
                     }
                     .font(CelestiaTheme.bodyFont)
-                    .foregroundStyle(requiresTokens && !canAfford ? CelestiaTheme.textSecondary : CelestiaTheme.navy)
+                    .foregroundStyle(canAfford ? CelestiaTheme.navy : CelestiaTheme.textSecondary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 16)
                             .fill(
-                                requiresTokens && !canAfford
-                                    ? LinearGradient(
-                                        colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.2)],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                    : LinearGradient(
-                                        colors: [CelestiaTheme.gold, CelestiaTheme.gold.opacity(0.8)],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
+                                canAfford
+                                    ? LinearGradient(colors: [CelestiaTheme.gold, CelestiaTheme.gold.opacity(0.8)], startPoint: .leading, endPoint: .trailing)
+                                    : LinearGradient(colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.2)], startPoint: .leading, endPoint: .trailing)
                             )
                     )
                 }
-                .disabled(requiresTokens && !canAfford)
+                .disabled(!canAfford)
             } else if !allCardsRevealed {
                 Text("Tap each card to reveal")
                     .font(CelestiaTheme.captionFont)
@@ -321,8 +237,7 @@ struct TarotView: View {
                     .padding(.vertical, 10)
                     .padding(.horizontal, 20)
                     .background(
-                        Capsule()
-                            .strokeBorder(CelestiaTheme.textSecondary.opacity(0.3), lineWidth: 1)
+                        Capsule().strokeBorder(CelestiaTheme.textSecondary.opacity(0.3), lineWidth: 1)
                     )
                 }
             }
@@ -339,9 +254,7 @@ struct TarotView: View {
                     TarotCardView(
                         drawnCard: card,
                         isRevealed: revealedIndices.contains(index),
-                        onTap: {
-                            revealCard(at: index)
-                        }
+                        onTap: { revealCard(at: index) }
                     )
                     .opacity(isNextToReveal || revealedIndices.contains(index) ? 1.0 : 0.5)
                     .allowsHitTesting(isNextToReveal)
@@ -366,21 +279,14 @@ struct TarotView: View {
             }
 
             if isInterpreting {
-                VStack(spacing: 12) {
-                    ProgressView()
-                        .tint(CelestiaTheme.gold)
-                        .scaleEffect(1.2)
-                    Text("The stars are aligning their wisdom...")
-                        .font(CelestiaTheme.captionFont)
-                        .foregroundStyle(CelestiaTheme.textSecondary)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.vertical, 32)
+                CosmicLoadingView(message: "The stars are aligning their wisdom...")
             } else if !interpretation.isEmpty {
-                Text(interpretation)
-                    .font(CelestiaTheme.bodyFont)
-                    .foregroundStyle(CelestiaTheme.textPrimary)
-                    .lineSpacing(4)
+                ReadingRevealView {
+                    Text(interpretation)
+                        .font(CelestiaTheme.bodyFont)
+                        .foregroundStyle(CelestiaTheme.textPrimary)
+                        .lineSpacing(4)
+                }
             }
         }
         .padding()
@@ -397,10 +303,10 @@ struct TarotView: View {
     // MARK: - Actions
 
     private func performDraw() {
-        // Spend tokens if required
-        let cost = effectiveTokenCost
-        if cost > 0 {
-            guard let balance = tokenBalance, balance.spend(cost) else { return }
+        // Spend stardust
+        if !stardustManager.spend(stardustCost) {
+            showPaywall = true
+            return
         }
 
         let cards = TarotDrawEngine.drawCards(spread: selectedSpread)
@@ -416,7 +322,6 @@ struct TarotView: View {
             revealedIndices.insert(index)
         }
 
-        // Check if all cards are now revealed — trigger interpretation
         if revealedIndices.count >= drawnCards.count {
             generateInterpretation()
         }
@@ -436,7 +341,6 @@ struct TarotView: View {
 
             interpretation = result
 
-            // Save completed reading to SwiftData
             let reading = TarotReading(
                 spreadType: selectedSpread.rawValue,
                 cards: drawnCards,
@@ -458,10 +362,4 @@ struct TarotView: View {
             question = ""
         }
     }
-}
-
-#Preview {
-    TarotView()
-        .environmentObject(CelestiaBrain())
-        .preferredColorScheme(.dark)
 }

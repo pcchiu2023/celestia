@@ -1,33 +1,27 @@
 import Foundation
 
 enum ShopCatalog {
-    // Auto-renewable subscriptions
-    static let starPassWeekly = "celestia_starpass_weekly"     // $6.99/week
-    static let starPassMonthly = "celestia_starpass_monthly"   // $19.99/month
-    static let starPassYearly = "celestia_starpass_yearly"     // $99.99/year
+    // Auto-renewable subscriptions (v2.0 pricing)
+    static let starPassMonthly = "com.pcchiu2023.celestia.starpass.monthly"   // $2.99/month
+    static let starPassAnnual = "com.pcchiu2023.celestia.starpass.annual"     // $19.99/year
 
     static let subscriptionIds: Set<String> = [
-        starPassWeekly, starPassMonthly, starPassYearly
+        starPassMonthly, starPassAnnual
     ]
 
-    // Consumables
-    static let tokenSmall = "celestia_tokens_5"    // $1.99 → 5 tokens
-    static let tokenLarge = "celestia_tokens_30"   // $9.99 → 30 tokens
+    // Consumable stardust packs
+    static let stardustStarter = "com.pcchiu2023.celestia.stardust.starter"   // $1.99 → 30✦
+    static let stardustPopular = "com.pcchiu2023.celestia.stardust.popular"   // $4.99 → 100✦
+    static let stardustCosmic = "com.pcchiu2023.celestia.stardust.cosmic"     // $9.99 → 250✦
 
-    static let tokenProducts: [String: Int] = [
-        tokenSmall: 5,
-        tokenLarge: 30
+    static let stardustProducts: [String: Int] = [
+        stardustStarter: 30,
+        stardustPopular: 100,
+        stardustCosmic: 250
     ]
 
-    // Token costs per feature
-    static let tokenCost: [String: Int] = [
-        "daily_refresh": 1,
-        "tarot_3card": 2,
-        "tarot_celtic": 3,
-        "compatibility": 3,
-        "placement_detail": 2,
-        "weekly_deep": 5
-    ]
+    // Subscription includes 80✦/month
+    static let monthlyStardustAllowance = 80
 
     // Subscription group ID
     static let subscriptionGroupId = "celestia_star_pass"

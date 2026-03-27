@@ -7,7 +7,7 @@
       "id" : "celestia_star_pass",
       "localizations" : [
         {
-          "description" : "Unlimited readings, weekly forecasts, transit alerts",
+          "description" : "80 Stardust/month, unlimited chat, detailed daily horoscope",
           "displayName" : "Star Pass",
           "locale" : "en_US"
         }
@@ -17,21 +17,21 @@
         {
           "adHocOffers" : [],
           "codeOffers" : [],
-          "displayPrice" : "6.99",
+          "displayPrice" : "2.99",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "starpass_weekly_001",
+          "internalID" : "starpass_monthly_001",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Full access, billed weekly",
-              "displayName" : "Star Pass Weekly",
+              "description" : "80 Stardust, unlimited chat, detailed daily horoscope",
+              "displayName" : "Star Pass Monthly",
               "locale" : "en_US"
             }
           ],
-          "productID" : "celestia_starpass_weekly",
-          "recurringSubscriptionPeriod" : "P1W",
-          "referenceName" : "Star Pass Weekly",
+          "productID" : "com.pcchiu2023.celestia.starpass.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Star Pass Monthly",
           "subscriptionGroupID" : "celestia_star_pass",
           "type" : "RecurringSubscription"
         },
@@ -41,39 +41,18 @@
           "displayPrice" : "19.99",
           "familyShareable" : false,
           "groupNumber" : 2,
-          "internalID" : "starpass_monthly_001",
+          "internalID" : "starpass_annual_001",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Full access, billed monthly",
-              "displayName" : "Star Pass Monthly",
+              "description" : "80 Stardust/month, unlimited chat — save 44%",
+              "displayName" : "Star Pass Annual",
               "locale" : "en_US"
             }
           ],
-          "productID" : "celestia_starpass_monthly",
-          "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Star Pass Monthly",
-          "subscriptionGroupID" : "celestia_star_pass",
-          "type" : "RecurringSubscription"
-        },
-        {
-          "adHocOffers" : [],
-          "codeOffers" : [],
-          "displayPrice" : "99.99",
-          "familyShareable" : false,
-          "groupNumber" : 3,
-          "internalID" : "starpass_yearly_001",
-          "introductoryOffer" : null,
-          "localizations" : [
-            {
-              "description" : "Full access, billed yearly — best value",
-              "displayName" : "Star Pass Yearly",
-              "locale" : "en_US"
-            }
-          ],
-          "productID" : "celestia_starpass_yearly",
+          "productID" : "com.pcchiu2023.celestia.starpass.annual",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Star Pass Yearly",
+          "referenceName" : "Star Pass Annual",
           "subscriptionGroupID" : "celestia_star_pass",
           "type" : "RecurringSubscription"
         }
@@ -84,36 +63,51 @@
     {
       "displayPrice" : "1.99",
       "familyShareable" : false,
-      "internalID" : "tokens_5_001",
+      "internalID" : "stardust_starter_001",
       "localizations" : [
         {
-          "description" : "5 star tokens for premium readings",
-          "displayName" : "5 Star Tokens",
+          "description" : "30 Stardust for readings and chat",
+          "displayName" : "Stardust Starter",
           "locale" : "en_US"
         }
       ],
-      "productID" : "celestia_tokens_5",
-      "referenceName" : "5 Star Tokens",
+      "productID" : "com.pcchiu2023.celestia.stardust.starter",
+      "referenceName" : "Stardust Starter (30)",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "stardust_popular_001",
+      "localizations" : [
+        {
+          "description" : "100 Stardust for readings and chat",
+          "displayName" : "Stardust Popular",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.pcchiu2023.celestia.stardust.popular",
+      "referenceName" : "Stardust Popular (100)",
       "type" : "Consumable"
     },
     {
       "displayPrice" : "9.99",
       "familyShareable" : false,
-      "internalID" : "tokens_30_001",
+      "internalID" : "stardust_cosmic_001",
       "localizations" : [
         {
-          "description" : "30 star tokens for premium readings — best value",
-          "displayName" : "30 Star Tokens",
+          "description" : "250 Stardust for readings and chat — best value",
+          "displayName" : "Stardust Cosmic",
           "locale" : "en_US"
         }
       ],
-      "productID" : "celestia_tokens_30",
-      "referenceName" : "30 Star Tokens",
+      "productID" : "com.pcchiu2023.celestia.stardust.cosmic",
+      "referenceName" : "Stardust Cosmic (250)",
       "type" : "Consumable"
     }
   ],
   "settings" : {
     "_applicationInternalID" : "celestia_001",
-    "_developerTeamID" : ""
+    "_developerTeamID" : "6MB8Q7K6XJ"
   }
 }

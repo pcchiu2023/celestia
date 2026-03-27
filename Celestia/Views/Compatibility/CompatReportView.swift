@@ -4,13 +4,17 @@ import SwiftData
 struct CompatReportView: View {
     let contact: Contact
     @EnvironmentObject var brain: CelestiaBrain
+    @EnvironmentObject var stardustManager: StardustManager
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
 
     @State private var reading: ParsedReading?
     @State private var isLoading = false
+    @State private var showPaywall = false
+    @State private var showShareSheet = false
 
     private var profile: UserProfile? { profiles.first }
+    private let readingCost = StardustManager.costs["compatibility"] ?? 5
 
     var body: some View {
         ScrollView {
@@ -19,9 +23,12 @@ struct CompatReportView: View {
                 chartComparison
 
                 if isLoading {
-                    loadingSection
+                    CosmicLoadingView(message: "Reading your stars together...")
                 } else if let reading {
-                    readingSection(reading)
+                    ReadingRevealView {
+                        readingSection(reading)
+                    }
+                    referralBanner
                 }
             }
             .padding()
@@ -32,6 +39,9 @@ struct CompatReportView: View {
         .toolbarColorScheme(.dark, for: .navigationBar)
         .task {
             await generateReading()
+        }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView(trigger: "compatibility")
         }
     }
 
@@ -74,7 +84,7 @@ struct CompatReportView: View {
 
     private var chartComparison: some View {
         VStack(spacing: 12) {
-            Text("Sun · Moon · Rising")
+            Text("Sun \u{00B7} Moon \u{00B7} Rising")
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.gold)
 
@@ -122,19 +132,6 @@ struct CompatReportView: View {
                     .foregroundStyle(CelestiaTheme.textPrimary)
             }
         }
-    }
-
-    // MARK: - Loading
-
-    private var loadingSection: some View {
-        VStack(spacing: 12) {
-            ProgressView()
-                .tint(CelestiaTheme.gold)
-            Text("Reading your stars together...")
-                .font(CelestiaTheme.captionFont)
-                .foregroundStyle(CelestiaTheme.textSecondary)
-        }
-        .padding(.vertical, 40)
     }
 
     // MARK: - Reading Display
@@ -189,10 +186,70 @@ struct CompatReportView: View {
         )
     }
 
+    // MARK: - Referral Banner
+
+    private var referralBanner: some View {
+        VStack(spacing: 12) {
+            HStack(spacing: 8) {
+                Image(systemName: "person.2.fill")
+                    .foregroundStyle(CelestiaTheme.gold)
+                Text("Share the stars!")
+                    .font(CelestiaTheme.bodyFont)
+                    .fontWeight(.medium)
+                    .foregroundStyle(CelestiaTheme.textPrimary)
+            }
+
+            Text("Invite a friend to Celestia and you both earn 15 \u{2726}")
+                .font(CelestiaTheme.captionFont)
+                .foregroundStyle(CelestiaTheme.textSecondary)
+                .multilineTextAlignment(.center)
+
+            if let code = profile?.referralCode {
+                Button {
+                    let text = "Check your cosmic compatibility with me on Celestia! Use my code: \(code)"
+                    let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let root = scene.windows.first?.rootViewController {
+                        root.present(av, animated: true)
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "square.and.arrow.up")
+                        Text("Share Code: \(code)")
+                    }
+                    .font(CelestiaTheme.captionFont)
+                    .fontWeight(.medium)
+                    .foregroundStyle(CelestiaTheme.navy)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(
+                        Capsule().fill(CelestiaTheme.gold)
+                    )
+                }
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(CelestiaTheme.purple.opacity(0.08))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .strokeBorder(CelestiaTheme.gold.opacity(0.2), lineWidth: 1)
+        )
+    }
+
     // MARK: - Generate
 
     private func generateReading() async {
         guard let profile, contact.chartData != nil else { return }
+
+        // Spend stardust
+        if !stardustManager.spend(readingCost) {
+            showPaywall = true
+            return
+        }
+
         isLoading = true
         let generator = ReadingGenerator(brain: brain)
         reading = await generator.generateCompatibilityReading(

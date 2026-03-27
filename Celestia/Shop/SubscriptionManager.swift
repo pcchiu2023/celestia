@@ -6,9 +6,9 @@ import SwiftData
 final class SubscriptionManager: ObservableObject {
 
     @Published var isSubscribed = false
-    @Published var currentTier: String = "free"  // "free", "weekly", "monthly", "yearly"
+    @Published var currentTier: String = "free"  // "free", "monthly", "yearly"
     @Published var products: [Product] = []
-    @Published var tokenProducts: [Product] = []
+    @Published var stardustProducts: [Product] = []
 
     private var transactionListener: Task<Void, Never>?
 
@@ -27,7 +27,9 @@ final class SubscriptionManager: ObservableObject {
     func loadProducts() async {
         do {
             let allIds = ShopCatalog.subscriptionIds.union([
-                ShopCatalog.tokenSmall, ShopCatalog.tokenLarge
+                ShopCatalog.stardustStarter,
+                ShopCatalog.stardustPopular,
+                ShopCatalog.stardustCosmic
             ])
             let storeProducts = try await Product.products(for: allIds)
 
@@ -35,8 +37,8 @@ final class SubscriptionManager: ObservableObject {
                 .filter { ShopCatalog.subscriptionIds.contains($0.id) }
                 .sorted { $0.price < $1.price }
 
-            tokenProducts = storeProducts
-                .filter { ShopCatalog.tokenProducts.keys.contains($0.id) }
+            stardustProducts = storeProducts
+                .filter { ShopCatalog.stardustProducts.keys.contains($0.id) }
                 .sorted { $0.price < $1.price }
         } catch {
             print("Failed to load products: \(error)")
@@ -112,9 +114,8 @@ final class SubscriptionManager: ObservableObject {
 
     private func tierFromProductId(_ productId: String) -> String {
         switch productId {
-        case ShopCatalog.starPassWeekly: return "weekly"
         case ShopCatalog.starPassMonthly: return "monthly"
-        case ShopCatalog.starPassYearly: return "yearly"
+        case ShopCatalog.starPassAnnual: return "yearly"
         default: return "free"
         }
     }

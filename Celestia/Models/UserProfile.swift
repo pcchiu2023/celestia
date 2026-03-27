@@ -13,8 +13,10 @@ final class UserProfile {
     var language: String          // AppLanguage.rawValue
     var chartDataJSON: Data?      // Encoded BirthChartData
     var createdAt: Date
-    var subscriptionTier: String  // "free", "weekly", "monthly", "yearly"
+    var subscriptionTier: String  // "free", "monthly", "yearly"
     var onboardingComplete: Bool
+    var referralCode: String
+    var preferredSystem: String   // "western" or "vedic"
 
     init(
         name: String,
@@ -36,6 +38,8 @@ final class UserProfile {
         self.createdAt = Date()
         self.subscriptionTier = "free"
         self.onboardingComplete = false
+        self.referralCode = String((0..<8).map { _ in "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement()! })
+        self.preferredSystem = "western"
     }
 
     var appLanguage: AppLanguage {

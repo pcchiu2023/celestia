@@ -7,7 +7,7 @@ struct CelestiaApp: App {
     let modelContainer: ModelContainer
     @StateObject private var brain = CelestiaBrain()
     @StateObject private var subscriptionManager = SubscriptionManager()
-    @StateObject private var tokenManager = TokenManager()
+    @StateObject private var stardustManager = StardustManager()
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -18,7 +18,8 @@ struct CelestiaApp: App {
                 TarotReading.self,
                 Contact.self,
                 ChatMessage.self,
-                TokenBalance.self
+                StardustBalance.self,
+                ReferralEvent.self
             )
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
@@ -30,9 +31,9 @@ struct CelestiaApp: App {
             ContentView()
                 .environmentObject(brain)
                 .environmentObject(subscriptionManager)
-                .environmentObject(tokenManager)
+                .environmentObject(stardustManager)
                 .onAppear {
-                    tokenManager.configure(modelContext: modelContainer.mainContext)
+                    stardustManager.configure(modelContext: modelContainer.mainContext)
                 }
         }
         .modelContainer(modelContainer)
@@ -60,6 +61,8 @@ struct CelestiaApp: App {
         case .active:
             UNUserNotificationCenter.current().setBadgeCount(0)
             Task { await subscriptionManager.checkSubscriptionStatus() }
+            // Claim daily stardust reward on app open
+            _ = stardustManager.claimDailyReward()
         default:
             break
         }

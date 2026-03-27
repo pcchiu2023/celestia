@@ -4,9 +4,14 @@ import SwiftData
 struct CompatibilityView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var brain: CelestiaBrain
+    @EnvironmentObject var stardustManager: StardustManager
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @Query(sort: \Contact.createdAt, order: .reverse) private var contacts: [Contact]
 
     @State private var showAddSheet = false
+    @State private var showPaywall = false
+
+    private let readingCost = StardustManager.costs["compatibility"] ?? 5
 
     var body: some View {
         NavigationStack {
@@ -34,6 +39,9 @@ struct CompatibilityView: View {
             }
             .sheet(isPresented: $showAddSheet) {
                 AddContactView()
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView(trigger: "compatibility")
             }
         }
     }
@@ -70,6 +78,16 @@ struct CompatibilityView: View {
                     Capsule().fill(CelestiaTheme.gold)
                 )
             }
+
+            // Stardust cost info
+            HStack(spacing: 4) {
+                Image(systemName: "sparkle")
+                    .font(.system(size: 11))
+                    .foregroundStyle(CelestiaTheme.gold)
+                Text("Compatibility readings cost \(readingCost) \u{2726}")
+                    .font(.system(size: 12))
+                    .foregroundStyle(CelestiaTheme.textSecondary)
+            }
         }
         .padding()
     }
@@ -79,10 +97,31 @@ struct CompatibilityView: View {
     private var contactList: some View {
         ScrollView {
             LazyVStack(spacing: 12) {
+                // Stardust banner
+                HStack(spacing: 6) {
+                    Image(systemName: "sparkle")
+                        .font(.system(size: 11))
+                        .foregroundStyle(CelestiaTheme.gold)
+                    Text("Readings cost \(readingCost) \u{2726} each")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(CelestiaTheme.textSecondary)
+                    Spacer()
+                    Text("\(stardustManager.balance) \u{2726} available")
+                        .font(.system(size: 12))
+                        .foregroundStyle(stardustManager.canAfford(readingCost) ? CelestiaTheme.gold : .red)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.white.opacity(0.03))
+                )
+
                 ForEach(contacts) { contact in
                     NavigationLink {
                         CompatReportView(contact: contact)
                             .environmentObject(brain)
+                            .environmentObject(stardustManager)
                     } label: {
                         contactRow(contact)
                     }
@@ -94,7 +133,6 @@ struct CompatibilityView: View {
 
     private func contactRow(_ contact: Contact) -> some View {
         HStack(spacing: 14) {
-            // Relationship icon
             ZStack {
                 Circle()
                     .fill(CelestiaTheme.purple.opacity(0.2))
@@ -116,7 +154,7 @@ struct CompatibilityView: View {
 
                     if contact.chartData != nil {
                         let sign = ZodiacSign.from(longitude: sunLongitude(from: contact))
-                        Text("· \(sign.symbol) \(sign.rawValue.capitalized)")
+                        Text("\u{00B7} \(sign.symbol) \(sign.rawValue.capitalized)")
                             .font(CelestiaTheme.captionFont)
                             .foregroundStyle(CelestiaTheme.purple)
                     }

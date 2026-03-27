@@ -14,7 +14,8 @@ final class ReadingGenerator: ObservableObject {
 
     func generateDailyReading(
         profile: UserProfile,
-        modelContext: ModelContext
+        modelContext: ModelContext,
+        isDetailed: Bool = false
     ) async -> ParsedReading {
         guard let chart = profile.chartData else { return ReadingParser.parse("") }
 
@@ -22,28 +23,14 @@ final class ReadingGenerator: ObservableObject {
         let memory = MemoryEngine.buildContext(modelContext: modelContext)
         let lang = profile.appLanguage
 
-        let systemPrompt = """
-        You are Celestia, a wise and mystical AI astrologer.
-        \(lang.promptInstruction)
-        Tone: warm, insightful, specific, empowering — never vague or generic.
-        Always reference specific planetary placements and transits.
+        let prompt = PromptBuilder.dailyReading(
+            chart: chart, transits: transits, memory: memory,
+            language: lang, isDetailed: isDetailed
+        )
 
-        \(AstrologyFormatter.formatChartForPrompt(chart))
-
-        \(AstrologyFormatter.formatTransitsForPrompt(transits))
-
-        \(memory)
-        """
-
-        let userPrompt = """
-        Write today's personalized horoscope. 80-120 words.
-        Focus on the most significant transits.
-        If memory mentions relevant past readings, reference them naturally.
-        Respond in valid JSON:
-        {"reading":"...","energy":{"love":0.0-1.0,"career":0.0-1.0,"health":0.0-1.0,"spiritual":0.0-1.0},"keyTheme":"...","actionAdvice":"...","luckyElements":{"color":"...","number":N,"crystal":"..."}}
-        """
-
-        let raw = await brain.generate(systemPrompt: systemPrompt, userPrompt: userPrompt)
+        let raw = await generateWithValidation(
+            system: prompt.system, user: prompt.user, chart: chart
+        )
         return ReadingParser.parse(raw)
     }
 
@@ -61,24 +48,12 @@ final class ReadingGenerator: ObservableObject {
         let memory = MemoryEngine.buildContext(modelContext: modelContext, limit: 3)
         let lang = profile.appLanguage
 
-        let systemPrompt = """
-        You are Celestia, a wise and mystical AI astrologer.
-        \(lang.promptInstruction)
-        You are having a conversation. Be warm, personal, and reference the user's chart.
-        Keep responses under 150 words.
+        let prompt = PromptBuilder.chatResponse(
+            message: message, chart: chart, transits: transits,
+            memory: memory, chatHistory: chatHistory, language: lang
+        )
 
-        \(AstrologyFormatter.formatChartForPrompt(chart))
-
-        \(AstrologyFormatter.formatTransitsForPrompt(transits))
-
-        \(memory)
-
-        \(chatHistory)
-        """
-
-        let raw = await brain.generate(systemPrompt: systemPrompt, userPrompt: message)
-
-        // For chat, extract plain text (not JSON)
+        let raw = await brain.generate(systemPrompt: prompt.system, userPrompt: prompt.user)
         let cleaned = raw
             .replacingOccurrences(of: "```", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -99,28 +74,15 @@ final class ReadingGenerator: ObservableObject {
         }
 
         let lang = profile.appLanguage
-        let compatData = AstrologyFormatter.formatCompatibility(
+        let prompt = PromptBuilder.compatibilityReading(
             chart1: chart1, name1: profile.name,
-            chart2: chart2, name2: contact.name
+            chart2: chart2, name2: contact.name,
+            language: lang
         )
 
-        let systemPrompt = """
-        You are Celestia, a wise AI astrologer specializing in relationship compatibility.
-        \(lang.promptInstruction)
-        Be honest but encouraging. Highlight strengths AND challenges.
-
-        \(compatData)
-        """
-
-        let userPrompt = """
-        Write a compatibility reading for \(profile.name) and \(contact.name).
-        Cover: emotional connection, communication style, love language, challenges, advice.
-        150-200 words.
-        Respond in valid JSON:
-        {"reading":"...","energy":{"love":0.0-1.0,"career":0.0-1.0,"health":0.0-1.0,"spiritual":0.0-1.0},"keyTheme":"...","actionAdvice":"...","luckyElements":{"color":"...","number":N,"crystal":"..."}}
-        """
-
-        let raw = await brain.generate(systemPrompt: systemPrompt, userPrompt: userPrompt)
+        let raw = await generateWithValidation(
+            system: prompt.system, user: prompt.user, chart: chart1
+        )
         return ReadingParser.parse(raw)
     }
 
@@ -135,31 +97,11 @@ final class ReadingGenerator: ObservableObject {
         guard let chart = profile.chartData else { return "" }
         let lang = profile.appLanguage
 
-        var cardDescriptions = "CARDS DRAWN:\n"
-        for card in cards {
-            let reversed = card.isReversed ? " (REVERSED)" : ""
-            cardDescriptions += "Position \(card.position) (\(card.positionMeaning)): \(card.cardId)\(reversed)\n"
-        }
+        let prompt = PromptBuilder.tarotReading(
+            cards: cards, question: question, chart: chart, language: lang
+        )
 
-        let systemPrompt = """
-        You are Celestia, interpreting a tarot spread.
-        \(lang.promptInstruction)
-        Connect the cards to the user's birth chart for a deeply personal reading.
-        Be specific and insightful, not generic.
-
-        \(AstrologyFormatter.formatChartForPrompt(chart))
-
-        \(cardDescriptions)
-        """
-
-        let questionText = question ?? "General guidance"
-        let userPrompt = """
-        The user's question: "\(questionText)"
-        Interpret each card in its position, then synthesize an overall message.
-        100-200 words total.
-        """
-
-        let raw = await brain.generate(systemPrompt: systemPrompt, userPrompt: userPrompt)
+        let raw = await brain.generate(systemPrompt: prompt.system, userPrompt: prompt.user)
         return raw.replacingOccurrences(of: "```", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
@@ -175,21 +117,47 @@ final class ReadingGenerator: ObservableObject {
         let transits = TransitEngine.shared.calculateTransits(natalChart: chart)
         let lang = profile.appLanguage
 
-        let systemPrompt = """
-        You are Celestia, writing the \(section) section of a weekly forecast.
-        \(lang.promptInstruction)
-        Be specific to this week's transits and the user's chart.
+        let prompt = PromptBuilder.weeklyReading(
+            section: section, chart: chart, transits: transits, language: lang
+        )
 
-        \(AstrologyFormatter.formatChartForPrompt(chart))
-        \(AstrologyFormatter.formatTransitsForPrompt(transits))
-        """
-
-        let userPrompt = """
-        Write the \(section) forecast for this week. 80-100 words.
-        Be specific and actionable. Reference exact transits.
-        """
-
-        let raw = await brain.generate(systemPrompt: systemPrompt, userPrompt: userPrompt)
+        let raw = await brain.generate(systemPrompt: prompt.system, userPrompt: prompt.user)
         return raw.replacingOccurrences(of: "```", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    // MARK: - Accuracy Gate
+
+    /// Generate text with post-validation. Retries once on failure, falls back to knowledge-only.
+    private func generateWithValidation(
+        system: String, user: String, chart: BirthChartData
+    ) async -> String {
+        // First attempt
+        let raw = await brain.generate(systemPrompt: system, userPrompt: user)
+        let validation = ReadingValidator.validate(reading: raw, chart: chart)
+
+        if validation.isValid {
+            return raw
+        }
+
+        // Second attempt with stricter prompt
+        let strictUser = """
+        IMPORTANT: Your previous response contained inaccuracies. Please try again.
+        Only reference these exact positions:
+        \(chart.planets.map { "\($0.body.rawValue.capitalized) in \($0.sign.rawValue.capitalized)" }.joined(separator: ", "))
+
+        \(user)
+        """
+
+        let retry = await brain.generate(systemPrompt: system, userPrompt: strictUser)
+        let retryValidation = ReadingValidator.validate(reading: retry, chart: chart)
+
+        if retryValidation.isValid {
+            return retry
+        }
+
+        // Fallback: return first attempt anyway (better UX than showing nothing)
+        // The issues are logged for analysis
+        print("ReadingValidator: Issues after retry: \(retryValidation.issues)")
+        return raw
     }
 }

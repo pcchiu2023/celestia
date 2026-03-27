@@ -4,6 +4,7 @@ import SwiftData
 struct ContentView: View {
     @EnvironmentObject var brain: CelestiaBrain
     @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @EnvironmentObject var stardustManager: StardustManager
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
 
@@ -149,7 +150,6 @@ struct ContentView: View {
     // MARK: - Complete Onboarding
 
     private func completeOnboarding() {
-        // Merge date + time
         let calendar = Calendar.current
         let dateComps = calendar.dateComponents([.year, .month, .day], from: onboardingBirthDate)
         let timeComps = calendar.dateComponents([.hour, .minute], from: onboardingBirthTime)

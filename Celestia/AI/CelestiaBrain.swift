@@ -76,7 +76,7 @@ final class CelestiaBrain: ObservableObject {
     // MARK: - Model Path
 
     private func findModelPath() -> URL? {
-        let modelName = "gemma-3n-E4B-it-4bit" // Will be updated when model is bundled
+        let modelName = "Qwen3.5-4B-MLX-4bit"
 
         // Check bundle resources
         if let url = Bundle.main.resourceURL?.appendingPathComponent(modelName) {
@@ -88,6 +88,14 @@ final class CelestiaBrain: ObservableObject {
         // Check bundle path directly
         if let url = Bundle.main.url(forResource: modelName, withExtension: nil) {
             return url
+        }
+
+        // Fallback: try HuggingFace download path (for development)
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        if let url = documentsPath?.appendingPathComponent("models/\(modelName)") {
+            if FileManager.default.fileExists(atPath: url.path) {
+                return url
+            }
         }
 
         return nil
