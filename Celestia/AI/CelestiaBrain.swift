@@ -1,5 +1,5 @@
 import Foundation
-import MLXLLM
+import MLXVLM
 import MLXLMCommon
 import MLX
 
@@ -8,28 +8,49 @@ final class CelestiaBrain: ObservableObject {
     @Published var isModelLoaded = false
     @Published var isGenerating = false
     @Published var loadingProgress: String = "Awakening the stars..."
+    @Published var modelLoadFailed = false
 
     private var container: ModelContainer?
+
+    // Qwen 3.5 4B — natively multimodal (VLM architecture), used text-only for astrology
+    private let modelConfig = ModelConfiguration(
+        id: "mlx-community/Qwen3.5-4B-MLX-4bit"
+    )
 
     // MARK: - Model Loading
 
     func loadModel() async {
+        #if targetEnvironment(simulator)
+        loadingProgress = "Simulator mode"
+        modelLoadFailed = true
+        isModelLoaded = true
+        return
+        #endif
+
         loadingProgress = "Aligning the cosmos..."
 
-        GPU.set(cacheLimit: 1024 * 1024 * 1024) // 1GB GPU cache
-
-        guard let modelURL = findModelPath() else {
-            loadingProgress = "Model not found"
-            return
-        }
+        GPU.set(cacheLimit: 2 * 1024 * 1024 * 1024) // 2GB GPU cache for 4B model
 
         do {
-            let config = ModelConfiguration(directory: modelURL)
-            container = try await LLMModelFactory.shared.loadContainer(configuration: config)
+            container = try await VLMModelFactory.shared.loadContainer(
+                configuration: modelConfig
+            ) { progress in
+                Task { @MainActor in
+                    let pct = Int(progress.fractionCompleted * 100)
+                    if progress.fractionCompleted < 1.0 {
+                        self.loadingProgress = "Downloading star charts... \(pct)%"
+                    } else {
+                        self.loadingProgress = "Aligning the cosmos..."
+                    }
+                }
+            }
+            modelLoadFailed = false
             isModelLoaded = true
             loadingProgress = "The stars are ready"
         } catch {
-            loadingProgress = "Failed to load: \(error.localizedDescription)"
+            loadingProgress = "The stars are resting"
+            modelLoadFailed = true
+            isModelLoaded = true // Allow app to function with fallback
         }
     }
 
@@ -71,33 +92,5 @@ final class CelestiaBrain: ObservableObject {
         } catch {
             return ""
         }
-    }
-
-    // MARK: - Model Path
-
-    private func findModelPath() -> URL? {
-        let modelName = "Qwen3.5-4B-MLX-4bit"
-
-        // Check bundle resources
-        if let url = Bundle.main.resourceURL?.appendingPathComponent(modelName) {
-            if FileManager.default.fileExists(atPath: url.path) {
-                return url
-            }
-        }
-
-        // Check bundle path directly
-        if let url = Bundle.main.url(forResource: modelName, withExtension: nil) {
-            return url
-        }
-
-        // Fallback: try HuggingFace download path (for development)
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        if let url = documentsPath?.appendingPathComponent("models/\(modelName)") {
-            if FileManager.default.fileExists(atPath: url.path) {
-                return url
-            }
-        }
-
-        return nil
     }
 }
