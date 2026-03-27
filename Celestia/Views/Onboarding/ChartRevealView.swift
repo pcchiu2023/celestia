@@ -13,7 +13,7 @@ struct ChartRevealView: View {
 
     var body: some View {
         ZStack {
-            CelestiaTheme.background.ignoresSafeArea()
+            CelestiaTheme.darkBg.ignoresSafeArea()
             StarFieldView()
 
             VStack(spacing: 32) {

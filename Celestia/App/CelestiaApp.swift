@@ -35,13 +35,13 @@ struct CelestiaApp: App {
                 .onAppear {
                     stardustManager.configure(modelContext: modelContainer.mainContext)
                 }
+                .onOpenURL { url in
+                    handleDeepLink(url)
+                }
         }
         .modelContainer(modelContainer)
         .onChange(of: scenePhase) { _, newPhase in
             handleScenePhase(newPhase)
-        }
-        .onOpenURL { url in
-            handleDeepLink(url)
         }
     }
 
@@ -135,11 +135,8 @@ struct CelestiaApp: App {
 
                 // Only reward after onboarding complete
                 if profile.onboardingComplete {
-                    // Record referral and reward both users
-                    let event = ReferralEvent(referralCode: code)
-                    context.insert(event)
-                    stardustManager.addStardust(ReferralEvent.rewardPerReferral)
-                    try? context.save()
+                    // Record referral and reward stardust
+                    stardustManager.addReferralReward(referralCode: code)
                 }
             }
         }

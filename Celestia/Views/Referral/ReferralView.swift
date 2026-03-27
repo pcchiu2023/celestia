@@ -35,7 +35,7 @@ struct ReferralView: View {
             }
             .padding()
         }
-        .background(CelestiaTheme.background)
+        .background(CelestiaTheme.darkBg)
         .navigationTitle("Share the Stars")
     }
 
@@ -99,7 +99,7 @@ struct ReferralView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(CelestiaTheme.cardBackground)
+        .background(CelestiaTheme.cardBg)
         .cornerRadius(16)
     }
 
@@ -127,7 +127,7 @@ struct ReferralView: View {
                     }
                 }
                 .padding()
-                .background(CelestiaTheme.cardBackground)
+                .background(CelestiaTheme.cardBg)
                 .cornerRadius(12)
             }
 
@@ -183,7 +183,7 @@ struct ReferralView: View {
             }
         }
         .padding()
-        .background(CelestiaTheme.cardBackground)
+        .background(CelestiaTheme.cardBg)
         .cornerRadius(16)
     }
 }
