@@ -18,7 +18,35 @@ final class KnowledgeEngine {
     // MARK: - Load Knowledge
 
     private func loadKnowledgeBase() {
-        // Planet-in-Sign knowledge (120 combos: 10 planets × 12 signs)
+        // Try loading from bundled JSON first, fall back to hardcoded defaults
+        if let url = Bundle.main.url(forResource: "en", withExtension: "json", subdirectory: "Knowledge"),
+           let data = try? Data(contentsOf: url),
+           let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+
+            // Planet-in-Sign (120 entries)
+            if let pis = json["planetInSign"] as? [String: String] {
+                planetInSign = pis
+            }
+
+            // Aspects (5 entries)
+            if let asp = json["aspects"] as? [String: String] {
+                aspectMeanings = asp
+            }
+
+            // Houses (12 entries)
+            if let houses = json["houses"] as? [String: String] {
+                houseMeanings = houses
+            }
+
+            // Transits
+            if let trans = json["transits"] as? [String: String] {
+                transitMeanings = trans
+            }
+
+            return
+        }
+
+        // Fallback: hardcoded defaults if JSON missing
         for planet in CelestialBody.allCases {
             guard planet != .northNode && planet != .southNode else { continue }
             for sign in ZodiacSign.allCases {
@@ -27,12 +55,10 @@ final class KnowledgeEngine {
             }
         }
 
-        // Aspect meanings
         for aspect in AspectType.allCases {
             aspectMeanings[aspect.rawValue] = Self.defaultAspectMeaning(aspect)
         }
 
-        // House meanings
         for house in 1...12 {
             houseMeanings["\(house)"] = Self.defaultHouseMeaning(house)
         }
@@ -67,9 +93,20 @@ final class KnowledgeEngine {
             result.append("Ascendant in \(chart.ascendantSign.rawValue.capitalized): \(houseMeaning)")
         }
 
-        // Current transits (up to 3)
+        // Current transits (up to 3) — enrich with knowledge base meanings
         for transit in transits.prefix(3) {
-            result.append("Transit: \(transit.description)")
+            // Build lookup key: e.g. "saturn_transit_sun", "jupiter_return"
+            var key = ""
+            if let natal = transit.natalTarget, natal == transit.transiting {
+                key = "\(transit.transiting.rawValue)_return"
+            } else if let natal = transit.natalTarget {
+                key = "\(transit.transiting.rawValue)_transit_\(natal.rawValue)"
+            }
+            if !key.isEmpty, let meaning = transitMeanings[key] {
+                result.append("Transit \(transit.description): \(meaning)")
+            } else {
+                result.append("Transit: \(transit.description)")
+            }
         }
 
         return result.joined(separator: "\n")
