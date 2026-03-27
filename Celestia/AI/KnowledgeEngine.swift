@@ -140,9 +140,3 @@ final class KnowledgeEngine {
     }
 }
 
-// Make AspectType CaseIterable for iteration
-extension AspectType: CaseIterable {
-    static var allCases: [AspectType] {
-        [.conjunction, .sextile, .square, .trine, .opposition]
-    }
-}

@@ -131,15 +131,15 @@ struct TarotView: View {
         }
     }
 
-    @ViewBuilder
     private func costLabel(for spread: SpreadType) -> some View {
-        let cost: Int
-        switch spread {
-        case .single: cost = StardustManager.costs["tarot_single"] ?? 2
-        case .threeCard: cost = StardustManager.costs["tarot_3card"] ?? 5
-        case .celticCross: cost = StardustManager.costs["tarot_celtic"] ?? 10
-        }
-        Text("\(cost) ✦")
+        let cost: Int = {
+            switch spread {
+            case .single: return StardustManager.costs["tarot_single"] ?? 2
+            case .threeCard: return StardustManager.costs["tarot_3card"] ?? 5
+            case .celticCross: return StardustManager.costs["tarot_celtic"] ?? 10
+            }
+        }()
+        return Text("\(cost) \u{2726}")
             .font(CelestiaTheme.captionFont)
             .foregroundStyle(CelestiaTheme.gold)
     }
