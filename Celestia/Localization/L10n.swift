@@ -11,15 +11,15 @@ struct L10n {
     var tabToday: String { s("Today", "Hoy", "Hoje", "今日", "오늘", "Aujourd'hui", "आज", "Heute", "今日", "今日") }
     var tabTarot: String { s("Tarot", "Tarot", "Tarô", "タロット", "타로", "Tarot", "टैरो", "Tarot", "塔羅", "塔罗") }
     var tabChat: String { s("Chat", "Chat", "Chat", "チャット", "채팅", "Chat", "चैट", "Chat", "聊天", "聊天") }
-    var tabMatch: String { s("Match", "Match", "Match", "相性", "궁합", "Match", "मैच", "Match", "配對", "配对") }
+    var tabMatch: String { s("Match", "Sinastría", "Sinastria", "相性", "궁합", "Affinités", "मिलान", "Kompatibilität", "配對", "配对") }
     var tabProfile: String { s("Profile", "Perfil", "Perfil", "プロフィール", "프로필", "Profil", "प्रोफ़ाइल", "Profil", "個人資料", "个人资料") }
 
     // MARK: - Welcome / Onboarding
 
     var appName: String { "Caelus" }
-    var welcomeSubtitle: String { s("Your Personal AI Astrologer", "Tu Astrólogo IA Personal", "Seu Astrólogo IA Pessoal", "あなた専属のAI占星術師", "당신의 개인 AI 점성술사", "Votre Astrologue IA Personnel", "आपका निजी AI ज्योतिषी", "Dein persönlicher KI-Astrologe", "您的私人AI占星師", "您的私人AI占星师") }
+    var welcomeSubtitle: String { s("Your Personal AI Astrologer", "Tu astrólogo personal de IA", "Seu astrólogo pessoal de IA", "あなた専属のAI占星術師", "나만의 AI 점성술사", "Votre astrologue IA personnel", "आपका निजी AI ज्योतिषी", "Dein persönlicher KI-Astrologe", "您的私人AI占星師", "您的私人AI占星师") }
     var welcomePrivacy: String { s("100% on-device · Your data never leaves your phone", "100% en dispositivo · Tus datos nunca salen de tu teléfono", "100% no dispositivo · Seus dados nunca saem do seu celular", "100%オンデバイス · データは端末から出ません", "100% 온디바이스 · 데이터가 기기를 떠나지 않습니다", "100% sur l'appareil · Vos données restent sur votre téléphone", "100% ऑन-डिवाइस · आपका डेटा आपके फ़ोन से बाहर नहीं जाता", "100% auf dem Gerät · Deine Daten verlassen nie dein Handy", "100%離線運行 · 您的資料不會離開手機", "100%离线运行 · 您的数据不会离开手机") }
-    var beginJourney: String { s("Begin Your Journey", "Comienza Tu Viaje", "Comece Sua Jornada", "旅を始める", "여정을 시작하세요", "Commencez Votre Voyage", "अपनी यात्रा शुरू करें", "Beginne Deine Reise", "開始您的旅程", "开始您的旅程") }
+    var beginJourney: String { s("Begin Your Journey", "Comienza tu viaje", "Comece sua jornada", "星の旅を始める", "여정을 시작하세요", "Commencez votre voyage", "अपनी यात्रा शुरू करें", "Beginne deine Reise", "開始您的旅程", "开始您的旅程") }
     var chooseLanguage: String { s("Choose Your Language", "Elige Tu Idioma", "Escolha Seu Idioma", "言語を選択", "언어를 선택하세요", "Choisissez Votre Langue", "अपनी भाषा चुनें", "Wähle Deine Sprache", "選擇您的語言", "选择您的语言") }
     var continueButton: String { s("Continue", "Continuar", "Continuar", "続ける", "계속", "Continuer", "जारी रखें", "Weiter", "繼續", "继续") }
 
@@ -66,7 +66,7 @@ struct L10n {
     var chatCaelus: String { s("✧ Caelus", "✧ Caelus", "✧ Caelus", "✧ カエルス", "✧ 카엘루스", "✧ Caelus", "✧ कैलस", "✧ Caelus", "✧ Caelus", "✧ Caelus") }
     var unlimited: String { s("Unlimited ✧", "Ilimitado ✧", "Ilimitado ✧", "無制限 ✧", "무제한 ✧", "Illimité ✧", "असीमित ✧", "Unbegrenzt ✧", "無限 ✧", "无限 ✧") }
     var oneFreeToday: String { s("1 free today", "1 gratis hoy", "1 grátis hoje", "本日1回無料", "오늘 1회 무료", "1 gratuit aujourd'hui", "आज 1 मुफ़्त", "1 heute gratis", "今天1次免費", "今天1次免费") }
-    var askCaelus: String { s("Ask Caelus...", "Pregunta a Caelus...", "Pergunte a Caelus...", "カエルスに聞く...", "카엘루스에게 물어보세요...", "Demandez à Caelus...", "कैलस से पूछें...", "Frage Caelus...", "詢問Caelus...", "询问Caelus...") }
+    var askCaelus: String { s("Ask Caelus...", "Pregúntale a Caelus...", "Pergunte ao Caelus...", "カエルスに聞く...", "카엘루스에게 물어보세요...", "Demandez à Caelus...", "कैलस से पूछें...", "Frage Caelus...", "詢問Caelus...", "询问Caelus...") }
     var consultingCosmos: String { s("Consulting the cosmos...", "Consultando el cosmos...", "Consultando o cosmos...", "宇宙に相談中...", "우주에 상담 중...", "Consultation du cosmos...", "ब्रह्मांड से परामर्श...", "Den Kosmos befragen...", "正在諮詢宇宙...", "正在咨询宇宙...") }
 
     // MARK: - Tarot
@@ -78,7 +78,7 @@ struct L10n {
     var tapToReveal: String { s("Tap each card to reveal", "Toca cada carta para revelar", "Toque cada carta para revelar", "カードをタップして表示", "카드를 탭하여 공개", "Appuyez sur chaque carte", "प्रत्येक कार्ड टैप करें", "Tippe auf jede Karte", "點擊每張牌揭示", "点击每张牌揭示") }
     var notEnoughStardust: String { s("Not Enough Stardust", "Sin Suficiente Polvo Estelar", "Poeira Estelar Insuficiente", "スターダスト不足", "스타더스트 부족", "Pas Assez de Poussière d'Étoiles", "पर्याप्त स्टारडस्ट नहीं", "Nicht Genug Sternenstaub", "星塵不足", "星尘不足") }
     var newReading: String { s("New Reading", "Nueva Lectura", "Nova Leitura", "新しいリーディング", "새 리딩", "Nouveau Tirage", "नया पठन", "Neue Lesung", "新占卜", "新占卜") }
-    var caelusInterpretation: String { s("Caelus's Interpretation", "Interpretación de Caelus", "Interpretação de Caelus", "カエルスの解釈", "카엘루스의 해석", "Interprétation de Caelus", "कैलस की व्याख्या", "Caelus' Deutung", "Caelus的解讀", "Caelus的解读") }
+    var caelusInterpretation: String { s("Caelus' Interpretation", "Interpretación de Caelus", "Interpretação de Caelus", "カエルスの解釈", "카엘루스의 해석", "Interprétation de Caelus", "कैलस की व्याख्या", "Caelus' Deutung", "Caelus的牌義解析", "Caelus的牌义解析") }
     var starsAligning: String { s("The stars are aligning their wisdom...", "Las estrellas alinean su sabiduría...", "As estrelas alinham sua sabedoria...", "星が知恵を集めています...", "별들이 지혜를 모으고 있습니다...", "Les étoiles alignent leur sagesse...", "सितारे अपनी बुद्धि संरेखित कर रहे हैं...", "Die Sterne richten ihre Weisheit aus...", "星星正在匯聚智慧...", "星星正在汇聚智慧...") }
     var reversed: String { s("REVERSED", "INVERTIDA", "INVERTIDA", "逆位置", "역방향", "INVERSÉ", "उल्टा", "UMGEKEHRT", "逆位", "逆位") }
 
@@ -90,7 +90,7 @@ struct L10n {
     var addContact: String { s("Add Contact", "Agregar Contacto", "Adicionar Contato", "連絡先を追加", "연락처 추가", "Ajouter un Contact", "संपर्क जोड़ें", "Kontakt Hinzufügen", "新增聯繫人", "新增联系人") }
     var delete: String { s("Delete", "Eliminar", "Excluir", "削除", "삭제", "Supprimer", "हटाएं", "Löschen", "刪除", "删除") }
     var you: String { s("You", "Tú", "Você", "あなた", "당신", "Vous", "आप", "Du", "你", "你") }
-    var caelusReading: String { s("Caelus's Reading", "Lectura de Caelus", "Leitura de Caelus", "カエルスのリーディング", "카엘루스의 리딩", "Lecture de Caelus", "कैलस का पठन", "Caelus' Lesung", "Caelus的解讀", "Caelus的解读") }
+    var caelusReading: String { s("Caelus' Reading", "Lectura de Caelus", "Leitura de Caelus", "カエルスのリーディング", "카엘루스의 리딩", "Tirage de Caelus", "कैलस की रीडिंग", "Caelus' Legung", "Caelus的占卜", "Caelus的占卜") }
     var advice: String { s("Advice", "Consejo", "Conselho", "アドバイス", "조언", "Conseil", "सलाह", "Ratschlag", "建議", "建议") }
     var readingStarsTogether: String { s("Reading your stars together...", "Leyendo sus estrellas juntos...", "Lendo suas estrelas juntos...", "一緒に星を読んでいます...", "함께 별을 읽고 있습니다...", "Lecture de vos étoiles ensemble...", "आपके सितारे एक साथ पढ़ रहे हैं...", "Eure Sterne zusammen lesen...", "正在一起解讀你們的星象...", "正在一起解读你们的星象...") }
 
@@ -133,7 +133,7 @@ struct L10n {
     // MARK: - Referral
 
     var shareStars: String { s("Share the Stars", "Comparte las Estrellas", "Compartilhe as Estrelas", "星を共有", "별을 공유하세요", "Partagez les Étoiles", "सितारे साझा करें", "Teile die Sterne", "分享星空", "分享星空") }
-    var inviteFriends: String { s("Invite Friends to Caelus", "Invita Amigos a Caelus", "Convide Amigos para Caelus", "友達をCaelusに招待", "친구를 Caelus에 초대", "Invitez des Amis sur Caelus", "दोस्तों को Caelus पर आमंत्रित करें", "Lade Freunde zu Caelus Ein", "邀請朋友加入Caelus", "邀请朋友加入Caelus") }
+    var inviteFriends: String { s("Invite Friends to Caelus", "Invita amigos a Caelus", "Convide amigos para o Caelus", "友達をCaelusに招待", "친구를 Caelus에 초대", "Invitez des amis sur Caelus", "दोस्तों को Caelus पर आमंत्रित करें", "Lade Freunde zu Caelus ein", "邀請朋友加入Caelus", "邀请朋友加入Caelus") }
     var referralReward: String { s("Both you and your friend earn 15 ✦ Stardust when they join and complete their birth chart.", "Tú y tu amigo ganan 15 ✦ cuando se unan y completen su carta natal.", "Você e seu amigo ganham 15 ✦ quando eles entram e completam seu mapa.", "友達が参加して出生チャートを完成させると、あなたと友達の両方に15 ✦が付与されます。", "친구가 가입하고 출생 차트를 완성하면 둘 다 15 ✦를 받습니다.", "Vous et votre ami gagnez 15 ✦ quand ils rejoignent et complètent leur thème.", "जब वे शामिल होते हैं तो आप और आपके मित्र दोनों 15 ✦ कमाते हैं।", "Du und dein Freund erhalten je 15 ✦ wenn sie beitreten.", "您和您的朋友在加入並完成星盤後各獲得15 ✦", "您和您的朋友在加入并完成星盘后各获得15 ✦") }
     var thisMonth: String { s("This Month", "Este Mes", "Este Mês", "今月", "이번 달", "Ce Mois", "इस महीने", "Diesen Monat", "本月", "本月") }
     var remaining: String { s("Remaining", "Restante", "Restante", "残り", "남은", "Restant", "शेष", "Verbleibend", "剩餘", "剩余") }
@@ -175,7 +175,7 @@ struct L10n {
     var purchaseFailed: String { s("Purchase failed. Please try again.", "La compra falló. Inténtalo de nuevo.", "A compra falhou. Tente novamente.", "購入に失敗しました。再試行してください。", "구매에 실패했습니다. 다시 시도해주세요.", "L'achat a échoué. Veuillez réessayer.", "खरीद विफल। कृपया पुनः प्रयास करें।", "Kauf fehlgeschlagen. Bitte erneut versuchen.", "購買失敗，請重試。", "购买失败，请重试。") }
     var fullChartRequired: String { s("Full chart comparison requires birth time and city for both people", "La comparación completa requiere hora y ciudad de nacimiento para ambos", "A comparação completa requer hora e cidade de nascimento para ambos", "完全なチャート比較には両者の出生時刻と場所が必要です", "전체 차트 비교에는 두 사람의 출생 시간과 도시가 필요합니다", "La comparaison complète nécessite l'heure et la ville de naissance pour les deux", "पूर्ण चार्ट तुलना के लिए दोनों के जन्म समय और शहर आवश्यक हैं", "Vollständiger Vergleich erfordert Geburtszeit und -ort für beide", "完整的星盤比較需要雙方的出生時間和城市", "完整的星盘比较需要双方的出生时间和城市") }
     var shareTheStars: String { s("Share the stars!", "¡Comparte las estrellas!", "Compartilhe as estrelas!", "星を共有しよう！", "별을 공유하세요!", "Partagez les étoiles !", "सितारे साझा करें!", "Teile die Sterne!", "分享星空！", "分享星空！") }
-    var inviteEarn: String { s("Invite a friend to Caelus and you both earn 15 ✦", "Invita a un amigo a Caelus y ambos ganan 15 ✦", "Convide um amigo para Caelus e ambos ganham 15 ✦", "友達をCaelusに招待すると、二人とも15 ✦獲得", "친구를 Caelus에 초대하면 둘 다 15 ✦ 획득", "Invitez un ami sur Caelus et gagnez tous les deux 15 ✦", "मित्र को Caelus पर आमंत्रित करें, दोनों 15 ✦ कमाएं", "Lade einen Freund zu Caelus ein und verdient beide 15 ✦", "邀請好友加入Caelus，雙方各獲得15 ✦", "邀请好友加入Caelus，双方各获得15 ✦") }
+    var inviteEarn: String { s("Invite a friend to Caelus and you both earn 15 ✦", "Invita a un amigo a Caelus y ambos ganan 15 ✦", "Convide um amigo para o Caelus e ambos ganham 15 ✦", "友達をCaelusに招待すると、二人とも15 ✦獲得", "친구를 Caelus에 초대하면 둘 다 15 ✦ 획득", "Invitez un ami sur Caelus et gagnez tous les deux 15 ✦", "मित्र को Caelus पर आमंत्रित करें, दोनों 15 ✦ प्राप्त करें", "Lade einen Freund zu Caelus ein und verdient beide 15 ✦", "邀請好友加入Caelus，雙方各獲得15 ✦", "邀请好友加入Caelus，双方各获得15 ✦") }
 
     // MARK: - Greeting
 

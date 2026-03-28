@@ -207,7 +207,7 @@ struct CompatReportView: View {
 
             if let code = profile?.referralCode {
                 Button {
-                    let text = "Check your cosmic compatibility with me on Celestia! Use my code: \(code)"
+                    let text = "Check your cosmic compatibility with me on Caelus! Use my code: \(code)"
                     let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
                     if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                        let root = scene.windows.first?.rootViewController {
