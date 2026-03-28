@@ -32,6 +32,13 @@ struct ChatView: View {
         canSendFree || stardustManager.canAfford(StardustManager.costs["chat"] ?? 1)
     }
 
+    private var characterMood: CaelusMood {
+        guard let lastAIMessage = messages.last(where: { $0.role == "celestia" }) else {
+            return .welcoming
+        }
+        return CaelusMoodRouter.resolveForChat(responseText: lastAIMessage.content)
+    }
+
     private var messageStatusText: String {
         if isSubscriber { return l.unlimited }
         if todayMessageCount < 1 { return l.oneFreeToday }
@@ -43,7 +50,10 @@ struct ChatView: View {
             CelestiaTheme.darkBg.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Header
+                // Character + Header
+                CaelusCharacterView(mood: characterMood, size: 80, showShadow: false)
+                    .padding(.top, 4)
+
                 HStack {
                     Text(l.chatCaelus)
                         .font(CelestiaTheme.subheadingFont)

@@ -14,6 +14,12 @@ struct WeeklyReadingView: View {
     private var profile: UserProfile? { profiles.first }
     private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
 
+    private var characterMood: CaelusMood {
+        if sections.count == sectionDefs.count { return .encouraging }
+        if isGenerating { return .mystical }
+        return .welcoming
+    }
+
     private var sectionDefs: [(title: String, icon: String)] {[
         (l.loveRelationships, "heart.fill"),
         (l.careerFinances, "briefcase.fill"),
@@ -26,6 +32,7 @@ struct WeeklyReadingView: View {
         ScrollView {
             VStack(spacing: 24) {
                 headerSection
+                CaelusCharacterView(mood: characterMood, size: 140)
 
                 if sections.isEmpty && !isGenerating {
                     startButton

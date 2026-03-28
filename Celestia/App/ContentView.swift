@@ -52,15 +52,7 @@ struct ContentView: View {
             VStack(spacing: 32) {
                 Spacer()
 
-                Image(systemName: "star.circle.fill")
-                    .font(.system(size: 80))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [CelestiaTheme.gold, CelestiaTheme.purple],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                CaelusCharacterView(mood: .welcoming, size: 200)
 
                 Text("Caelus")
                     .font(.custom("Georgia", size: 42))
@@ -135,15 +127,7 @@ struct ContentView: View {
         VStack(spacing: 24) {
             Spacer()
 
-            Image(systemName: "star.circle.fill")
-                .font(.system(size: 80))
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [CelestiaTheme.gold, CelestiaTheme.purple],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+            CaelusCharacterView(mood: .welcoming, size: 200)
 
             Text("Caelus")
                 .font(.custom("Georgia", size: 42))

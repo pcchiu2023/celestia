@@ -24,6 +24,9 @@ struct CelestiaApp: App {
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }
+
+        // Preload Caelus character images into NSCache
+        CaelusImageCache.shared.preloadAll()
     }
 
     var body: some Scene {

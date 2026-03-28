@@ -29,6 +29,16 @@ struct TarotView: View {
         hasDrawn && revealedIndices.count >= drawnCards.count
     }
 
+    private var characterMood: CaelusMood {
+        guard hasDrawn else { return .welcoming }
+        return CaelusMoodRouter.resolveForTarot(
+            cardNames: drawnCards.map(\.cardId),
+            reversedCount: drawnCards.filter(\.isReversed).count,
+            totalCards: drawnCards.count,
+            keyTheme: interpretation
+        )
+    }
+
     // MARK: - Stardust Cost
 
     private var stardustCost: Int {
@@ -47,6 +57,7 @@ struct TarotView: View {
         ScrollView {
             VStack(spacing: 24) {
                 headerSection
+                CaelusCharacterView(mood: characterMood, size: 140)
                 spreadPicker
                 stardustCostBanner
                 questionField

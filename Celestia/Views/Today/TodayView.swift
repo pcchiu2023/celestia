@@ -13,6 +13,17 @@ struct TodayView: View {
     @State private var showRewardBanner = false
 
     private var profile: UserProfile? { profiles.first }
+
+    private var characterMood: CaelusMood {
+        guard let reading = todayReading else { return .welcoming }
+        return CaelusMoodRouter.resolve(
+            energyLove: reading.energyLove,
+            energyCareer: reading.energyCareer,
+            energyHealth: reading.energyHealth,
+            energySpiritual: reading.energySpiritual,
+            keyTheme: reading.keyTheme
+        )
+    }
     private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
     private var isSubscriber: Bool { subscriptionManager.isSubscribed }
 
@@ -42,6 +53,9 @@ struct TodayView: View {
                     if showRewardBanner {
                         dailyRewardBanner
                     }
+
+                    // Caelus character
+                    CaelusCharacterView(mood: characterMood)
 
                     // Daily Reading Card
                     if isLoading {

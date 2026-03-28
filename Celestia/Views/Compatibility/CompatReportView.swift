@@ -17,10 +17,16 @@ struct CompatReportView: View {
     private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
     private let readingCost = StardustManager.costs["compatibility"] ?? 5
 
+    private var characterMood: CaelusMood {
+        guard let reading else { return .neutral }
+        return CaelusMoodRouter.resolveForCompatibility(energyLove: reading.energyLove)
+    }
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
                 headerSection
+                CaelusCharacterView(mood: characterMood, size: 160)
                 chartComparison
 
                 if isLoading {
