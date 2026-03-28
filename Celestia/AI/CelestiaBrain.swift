@@ -26,8 +26,8 @@ final class CelestiaBrain: ObservableObject {
 
         GPU.set(cacheLimit: 2 * 1024 * 1024 * 1024) // 2GB GPU cache for 4B model
 
-        // Load from bundled model directory
-        guard let modelURL = Bundle.main.resourceURL?.appendingPathComponent("MLXModel") else {
+        // Load from bundled model files (in app bundle root)
+        guard let modelURL = Bundle.main.resourceURL else {
             loadingProgress = "The stars are resting"
             modelLoadFailed = true
             isModelLoaded = true
