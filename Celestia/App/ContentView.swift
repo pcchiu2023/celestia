@@ -62,7 +62,7 @@ struct ContentView: View {
                         )
                     )
 
-                Text("Celestia")
+                Text("Caelus")
                     .font(.custom("Georgia", size: 42))
                     .foregroundStyle(CelestiaTheme.gold)
 
@@ -145,7 +145,7 @@ struct ContentView: View {
                     )
                 )
 
-            Text("Celestia")
+            Text("Caelus")
                 .font(.custom("Georgia", size: 42))
                 .foregroundStyle(CelestiaTheme.gold)
 

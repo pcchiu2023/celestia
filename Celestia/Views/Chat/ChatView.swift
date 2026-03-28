@@ -45,7 +45,7 @@ struct ChatView: View {
             VStack(spacing: 0) {
                 // Header
                 HStack {
-                    Text(l.chatCelestia)
+                    Text(l.chatCaelus)
                         .font(CelestiaTheme.subheadingFont)
                         .foregroundColor(CelestiaTheme.gold)
                     Spacer()
@@ -86,7 +86,7 @@ struct ChatView: View {
 
                 // Input
                 HStack(spacing: 12) {
-                    TextField(l.askCelestia, text: $inputText, axis: .vertical)
+                    TextField(l.askCaelus, text: $inputText, axis: .vertical)
                         .textFieldStyle(.plain)
                         .padding(12)
                         .background(Color.white.opacity(0.1))

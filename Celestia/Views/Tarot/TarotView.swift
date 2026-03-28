@@ -274,7 +274,7 @@ struct TarotView: View {
             HStack {
                 Image(systemName: "text.book.closed")
                     .foregroundStyle(CelestiaTheme.gold)
-                Text(l.celestiaInterpretation)
+                Text(l.caelusInterpretation)
                     .font(CelestiaTheme.subheadingFont)
                     .foregroundStyle(CelestiaTheme.textPrimary)
             }

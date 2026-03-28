@@ -17,7 +17,7 @@ enum PromptBuilder {
         let wordCount = isDetailed ? "150-200" : "80-120"
 
         let system = """
-        You are Celestia, a wise and mystical AI astrologer.
+        You are Caelus, a wise and mystical AI astrologer.
         \(language.promptInstruction)
         Tone: warm, insightful, specific, empowering — never vague or generic.
 
@@ -61,7 +61,7 @@ enum PromptBuilder {
         let knowledge = KnowledgeEngine.shared.snippets(for: chart, transits: transits)
 
         let system = """
-        You are Celestia, a wise and mystical AI astrologer having a conversation.
+        You are Caelus, a wise and mystical AI astrologer having a conversation.
         \(language.promptInstruction)
         Be warm, personal, and reference the user's chart.
         Keep responses under 150 words.
@@ -100,7 +100,7 @@ enum PromptBuilder {
         let knowledge2 = KnowledgeEngine.shared.snippets(for: chart2)
 
         let system = """
-        You are Celestia, a wise AI astrologer specializing in relationship compatibility.
+        You are Caelus, a wise AI astrologer specializing in relationship compatibility.
         \(language.promptInstruction)
         Be honest but encouraging. Highlight strengths AND challenges.
 
@@ -143,7 +143,7 @@ enum PromptBuilder {
         let knowledge = KnowledgeEngine.shared.snippets(for: chart)
 
         let system = """
-        You are Celestia, interpreting a tarot spread.
+        You are Caelus, interpreting a tarot spread.
         \(language.promptInstruction)
         Connect the cards to the user's birth chart for a deeply personal reading.
         Be specific and insightful, not generic.
@@ -178,7 +178,7 @@ enum PromptBuilder {
         let knowledge = KnowledgeEngine.shared.snippets(for: chart, transits: transits)
 
         let system = """
-        You are Celestia, writing the \(section) section of a weekly forecast.
+        You are Caelus, writing the \(section) section of a weekly forecast.
         \(language.promptInstruction)
         Be specific to this week's transits and the user's chart.
 

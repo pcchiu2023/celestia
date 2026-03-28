@@ -139,7 +139,7 @@ struct CompatReportView: View {
 
     private func readingSection(_ reading: ParsedReading) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(l.celestiaReading)
+            Text(l.caelusReading)
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.gold)
 

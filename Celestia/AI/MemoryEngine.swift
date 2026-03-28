@@ -42,7 +42,7 @@ enum MemoryEngine {
 
         var lines = ["RECENT CONVERSATION:"]
         for msg in recent {
-            let role = msg.role == "user" ? "User" : "Celestia"
+            let role = msg.role == "user" ? "User" : "Caelus"
             lines.append("\(role): \(String(msg.content.prefix(100)))")
         }
         return lines.joined(separator: "\n")
