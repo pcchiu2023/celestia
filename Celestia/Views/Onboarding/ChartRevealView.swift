@@ -35,7 +35,9 @@ struct ChartRevealView: View {
                         .opacity(showChart ? 1 : 0)
 
                     // Chart wheel placeholder
-                    ChartWheelView(profile: profile)
+                    if let chart = profile.chartData {
+                        ChartWheelView(chart: chart)
+                    }
                         .frame(width: 240, height: 240)
                         .rotationEffect(.degrees(rotation))
                         .scaleEffect(scale)
