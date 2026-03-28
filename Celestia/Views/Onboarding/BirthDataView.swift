@@ -9,6 +9,7 @@ struct BirthDataView: View {
     @Binding var birthLatitude: Double
     @Binding var birthLongitude: Double
     let onComplete: () -> Void
+    var language: AppLanguage = .en
 
     @State private var citySearchText = ""
     @State private var searchResults: [CLPlacemark] = []
@@ -16,20 +17,22 @@ struct BirthDataView: View {
 
     private let geocoder = CLGeocoder()
 
+    private var l: L10n { L10n(lang: language) }
+
     var body: some View {
         ZStack {
             CelestiaTheme.darkBg.ignoresSafeArea()
 
             ScrollView {
                 VStack(spacing: 24) {
-                    Text("Tell Me About You")
+                    Text(l.tellMeAboutYou)
                         .font(CelestiaTheme.headingFont)
                         .foregroundColor(CelestiaTheme.gold)
                         .padding(.top, 40)
 
                     // Name
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Your Name")
+                        Text(l.yourName)
                             .font(CelestiaTheme.captionFont)
                             .foregroundColor(CelestiaTheme.textSecondary)
                         TextField("", text: $name)
@@ -42,7 +45,7 @@ struct BirthDataView: View {
 
                     // Birth Date
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Birth Date")
+                        Text(l.birthDate)
                             .font(CelestiaTheme.captionFont)
                             .foregroundColor(CelestiaTheme.textSecondary)
                         DatePicker("", selection: $birthDate, displayedComponents: .date)
@@ -52,7 +55,7 @@ struct BirthDataView: View {
 
                     // Birth Time
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Birth Time (as exact as possible)")
+                        Text(l.birthTime)
                             .font(CelestiaTheme.captionFont)
                             .foregroundColor(CelestiaTheme.textSecondary)
                         DatePicker("", selection: $birthTime, displayedComponents: .hourAndMinute)
@@ -62,10 +65,10 @@ struct BirthDataView: View {
 
                     // Birth City
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Birth City")
+                        Text(l.birthCity)
                             .font(CelestiaTheme.captionFont)
                             .foregroundColor(CelestiaTheme.textSecondary)
-                        TextField("Search city...", text: $citySearchText)
+                        TextField(l.searchCity, text: $citySearchText)
                             .textFieldStyle(.plain)
                             .padding(12)
                             .background(Color.white.opacity(0.1))
@@ -93,7 +96,7 @@ struct BirthDataView: View {
                         }
 
                         if !birthCity.isEmpty {
-                            Text("Selected: \(birthCity)")
+                            Text("\(l.selected) \(birthCity)")
                                 .font(CelestiaTheme.captionFont)
                                 .foregroundColor(CelestiaTheme.gold)
                         }
@@ -104,7 +107,7 @@ struct BirthDataView: View {
                     Button {
                         onComplete()
                     } label: {
-                        Text("Reveal My Chart ✧")
+                        Text(l.revealChart)
                             .font(CelestiaTheme.bodyFont.bold())
                             .foregroundColor(CelestiaTheme.darkBg)
                             .frame(maxWidth: .infinity)

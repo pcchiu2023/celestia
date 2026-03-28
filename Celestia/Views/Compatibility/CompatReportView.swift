@@ -14,6 +14,7 @@ struct CompatReportView: View {
     @State private var showShareSheet = false
 
     private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
     private let readingCost = StardustManager.costs["compatibility"] ?? 5
 
     var body: some View {
@@ -23,7 +24,7 @@ struct CompatReportView: View {
                 chartComparison
 
                 if isLoading {
-                    CosmicLoadingView(message: "Reading your stars together...")
+                    CosmicLoadingView(message: l.readingStarsTogether)
                 } else if let reading {
                     ReadingRevealView {
                         readingSection(reading)
@@ -34,7 +35,7 @@ struct CompatReportView: View {
             .padding()
         }
         .background(CelestiaTheme.darkBg.ignoresSafeArea())
-        .navigationTitle("Compatibility")
+        .navigationTitle(l.compatibility)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .task {
@@ -54,7 +55,7 @@ struct CompatReportView: View {
                     Image(systemName: "person.fill")
                         .font(.title2)
                         .foregroundStyle(CelestiaTheme.gold)
-                    Text(profile?.name ?? "You")
+                    Text(profile?.name ?? l.you)
                         .font(CelestiaTheme.bodyFont)
                         .foregroundStyle(CelestiaTheme.textPrimary)
                 }
@@ -91,17 +92,17 @@ struct CompatReportView: View {
             if let userChart = profile?.chartData, let contactChart = contact.chartData {
                 HStack {
                     VStack(spacing: 8) {
-                        signRow("Sun", sign: userChart.sunSign)
-                        signRow("Moon", sign: userChart.moonSign)
-                        signRow("Rising", sign: userChart.ascendantSign)
+                        signRow(l.sun, sign: userChart.sunSign)
+                        signRow(l.moon, sign: userChart.moonSign)
+                        signRow(l.rising, sign: userChart.ascendantSign)
                     }
 
                     Spacer()
 
                     VStack(spacing: 8) {
-                        signRow("Sun", sign: contactChart.sunSign)
-                        signRow("Moon", sign: contactChart.moonSign)
-                        signRow("Rising", sign: contactChart.ascendantSign)
+                        signRow(l.sun, sign: contactChart.sunSign)
+                        signRow(l.moon, sign: contactChart.moonSign)
+                        signRow(l.rising, sign: contactChart.ascendantSign)
                     }
                 }
                 .padding()
@@ -110,7 +111,7 @@ struct CompatReportView: View {
                         .fill(Color.white.opacity(0.05))
                 )
             } else {
-                Text("Full chart comparison requires birth time and city for both people")
+                Text(l.fullChartRequired)
                     .font(CelestiaTheme.captionFont)
                     .foregroundStyle(CelestiaTheme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -138,7 +139,7 @@ struct CompatReportView: View {
 
     private func readingSection(_ reading: ParsedReading) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Celestia's Reading")
+            Text(l.celestiaReading)
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.gold)
 
@@ -166,7 +167,7 @@ struct CompatReportView: View {
 
             if !reading.actionAdvice.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Advice")
+                    Text(l.advice)
                         .font(CelestiaTheme.captionFont)
                         .foregroundStyle(CelestiaTheme.textSecondary)
                     Text(reading.actionAdvice)
@@ -193,13 +194,13 @@ struct CompatReportView: View {
             HStack(spacing: 8) {
                 Image(systemName: "person.2.fill")
                     .foregroundStyle(CelestiaTheme.gold)
-                Text("Share the stars!")
+                Text(l.shareTheStars)
                     .font(CelestiaTheme.bodyFont)
                     .fontWeight(.medium)
                     .foregroundStyle(CelestiaTheme.textPrimary)
             }
 
-            Text("Invite a friend to Celestia and you both earn 15 \u{2726}")
+            Text(l.inviteEarn)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
                 .multilineTextAlignment(.center)

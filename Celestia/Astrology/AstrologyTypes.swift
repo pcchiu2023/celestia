@@ -232,7 +232,7 @@ enum ReadingType: String, Codable {
 // MARK: - Language
 
 enum AppLanguage: String, Codable, CaseIterable {
-    case en, es, pt, ja, ko, fr, hi, de
+    case en, es, pt, ja, ko, fr, hi, de, zhHant, zhHans
 
     var displayName: String {
         switch self {
@@ -244,6 +244,8 @@ enum AppLanguage: String, Codable, CaseIterable {
         case .fr: return "Français"
         case .hi: return "हिन्दी"
         case .de: return "Deutsch"
+        case .zhHant: return "繁體中文"
+        case .zhHans: return "简体中文"
         }
     }
 
@@ -257,6 +259,8 @@ enum AppLanguage: String, Codable, CaseIterable {
         case .fr: return "Répondez en français."
         case .hi: return "हिन्दी में उत्तर दें।"
         case .de: return "Antworten Sie auf Deutsch."
+        case .zhHant: return "請用繁體中文回答。"
+        case .zhHans: return "请用简体中文回答。"
         }
     }
 }

@@ -19,6 +19,7 @@ struct TarotView: View {
     @State private var showPaywall = false
 
     private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
 
     private var readingGenerator: ReadingGenerator {
         ReadingGenerator(brain: brain)
@@ -74,11 +75,11 @@ struct TarotView: View {
                 .font(.system(size: 36))
                 .foregroundStyle(CelestiaTheme.gold)
 
-            Text("Tarot Reading")
+            Text(l.tarotReading)
                 .font(CelestiaTheme.headingFont)
                 .foregroundStyle(CelestiaTheme.textPrimary)
 
-            Text("Let the cards reveal what the stars whisper")
+            Text(l.tarotSubtitle)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
         }
@@ -155,7 +156,7 @@ struct TarotView: View {
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(CelestiaTheme.textSecondary)
             Spacer()
-            Text("\(stardustManager.balance) ✦ available")
+            Text("\(stardustManager.balance) ✦ \(l.available)")
                 .font(.system(size: 12))
                 .foregroundStyle(canAfford ? CelestiaTheme.gold : .red)
         }
@@ -171,11 +172,11 @@ struct TarotView: View {
 
     private var questionField: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Your Question (optional)")
+            Text(l.yourQuestion)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
 
-            TextField("What weighs on your mind?", text: $question)
+            TextField(l.whatWeighs, text: $question)
                 .textFieldStyle(.plain)
                 .font(CelestiaTheme.bodyFont)
                 .foregroundStyle(CelestiaTheme.textPrimary)
@@ -202,7 +203,7 @@ struct TarotView: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "wand.and.stars")
-                        Text(canAfford ? "Draw Cards (\(stardustCost) ✦)" : "Not Enough Stardust")
+                        Text(canAfford ? "\(l.drawCards) (\(stardustCost) ✦)" : l.notEnoughStardust)
                             .fontWeight(.semibold)
                     }
                     .font(CelestiaTheme.bodyFont)
@@ -220,7 +221,7 @@ struct TarotView: View {
                 }
                 .disabled(!canAfford)
             } else if !allCardsRevealed {
-                Text("Tap each card to reveal")
+                Text(l.tapToReveal)
                     .font(CelestiaTheme.captionFont)
                     .foregroundStyle(CelestiaTheme.gold)
                     .transition(.opacity)
@@ -230,7 +231,7 @@ struct TarotView: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "arrow.counterclockwise")
-                        Text("New Reading")
+                        Text(l.newReading)
                     }
                     .font(CelestiaTheme.captionFont)
                     .foregroundStyle(CelestiaTheme.textSecondary)
@@ -273,13 +274,13 @@ struct TarotView: View {
             HStack {
                 Image(systemName: "text.book.closed")
                     .foregroundStyle(CelestiaTheme.gold)
-                Text("Celestia's Interpretation")
+                Text(l.celestiaInterpretation)
                     .font(CelestiaTheme.subheadingFont)
                     .foregroundStyle(CelestiaTheme.textPrimary)
             }
 
             if isInterpreting {
-                CosmicLoadingView(message: "The stars are aligning their wisdom...")
+                CosmicLoadingView(message: l.starsAligning)
             } else if !interpretation.isEmpty {
                 ReadingRevealView {
                     Text(interpretation)

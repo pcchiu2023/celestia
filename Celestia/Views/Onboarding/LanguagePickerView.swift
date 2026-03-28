@@ -4,6 +4,8 @@ struct LanguagePickerView: View {
     @Binding var selectedLanguage: AppLanguage
     let onContinue: () -> Void
 
+    private var l: L10n { L10n(lang: selectedLanguage) }
+
     var body: some View {
         ZStack {
             CelestiaTheme.darkBg.ignoresSafeArea()
@@ -14,7 +16,7 @@ struct LanguagePickerView: View {
                 Text("✧")
                     .font(.system(size: 60))
 
-                Text("Choose Your Language")
+                Text(l.chooseLanguage)
                     .font(CelestiaTheme.headingFont)
                     .foregroundColor(CelestiaTheme.gold)
 
@@ -42,7 +44,7 @@ struct LanguagePickerView: View {
                 Button {
                     onContinue()
                 } label: {
-                    Text("Continue")
+                    Text(l.continueButton)
                         .font(CelestiaTheme.bodyFont.bold())
                         .foregroundColor(CelestiaTheme.darkBg)
                         .frame(maxWidth: .infinity)

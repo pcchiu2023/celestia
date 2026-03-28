@@ -21,6 +21,10 @@ struct AddContactView: View {
     private let geocoder = CLGeocoder()
     private let relationships = ["partner", "friend", "family", "crush"]
 
+    @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
+    private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -30,10 +34,10 @@ struct AddContactView: View {
                     VStack(spacing: 20) {
                         // Name
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Name")
+                            Text(l.name)
                                 .font(CelestiaTheme.captionFont)
                                 .foregroundStyle(CelestiaTheme.textSecondary)
-                            TextField("Their name", text: $name)
+                            TextField(l.theirName, text: $name)
                                 .textFieldStyle(.plain)
                                 .font(CelestiaTheme.bodyFont)
                                 .foregroundStyle(CelestiaTheme.textPrimary)
@@ -43,7 +47,7 @@ struct AddContactView: View {
 
                         // Relationship
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Relationship")
+                            Text(l.relationship)
                                 .font(CelestiaTheme.captionFont)
                                 .foregroundStyle(CelestiaTheme.textSecondary)
                             HStack(spacing: 8) {
@@ -66,7 +70,7 @@ struct AddContactView: View {
 
                         // Birth Date
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Birth Date")
+                            Text(l.birthDate)
                                 .font(CelestiaTheme.captionFont)
                                 .foregroundStyle(CelestiaTheme.textSecondary)
                             DatePicker("", selection: $birthDate, displayedComponents: .date)
@@ -79,7 +83,7 @@ struct AddContactView: View {
                         // Optional Birth Time
                         VStack(alignment: .leading, spacing: 8) {
                             Toggle(isOn: $includeBirthTime) {
-                                Text("Include Birth Time")
+                                Text(l.includeBirthTime)
                                     .font(CelestiaTheme.captionFont)
                                     .foregroundStyle(CelestiaTheme.textSecondary)
                             }
@@ -96,11 +100,11 @@ struct AddContactView: View {
 
                         // Optional Birth City
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Birth City (optional)")
+                            Text(l.birthCityOptional)
                                 .font(CelestiaTheme.captionFont)
                                 .foregroundStyle(CelestiaTheme.textSecondary)
 
-                            TextField("Search city...", text: $citySearchText)
+                            TextField(l.searchCity, text: $citySearchText)
                                 .textFieldStyle(.plain)
                                 .font(CelestiaTheme.bodyFont)
                                 .foregroundStyle(CelestiaTheme.textPrimary)
@@ -130,7 +134,7 @@ struct AddContactView: View {
                             }
 
                             if !birthCity.isEmpty {
-                                Text("Selected: \(birthCity)")
+                                Text("\(l.selected) \(birthCity)")
                                     .font(CelestiaTheme.captionFont)
                                     .foregroundStyle(CelestiaTheme.gold)
                             }
@@ -139,16 +143,16 @@ struct AddContactView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Add Contact")
+            .navigationTitle(l.addContact)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button(l.cancel) { dismiss() }
                         .foregroundStyle(CelestiaTheme.textSecondary)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { saveContact() }
+                    Button(l.save) { saveContact() }
                         .foregroundStyle(CelestiaTheme.gold)
                         .disabled(name.isEmpty)
                 }

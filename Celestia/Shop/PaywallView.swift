@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import StoreKit
 
 struct PaywallView: View {
@@ -10,6 +11,9 @@ struct PaywallView: View {
     @State private var selectedProduct: Product?
     @State private var isPurchasing = false
     @State private var errorMessage: String?
+    @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
+    private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
 
     private var triggerMessage: String {
         switch trigger {
@@ -55,7 +59,7 @@ struct PaywallView: View {
                     }
                 }
             }
-            .alert("Purchase Error", isPresented: .init(
+            .alert(l.purchaseError, isPresented: .init(
                 get: { errorMessage != nil },
                 set: { if !$0 { errorMessage = nil } }
             )) {
@@ -80,7 +84,7 @@ struct PaywallView: View {
                     )
                 )
 
-            Text("Stardust & Star Pass")
+            Text(l.stardustAndPass)
                 .font(.custom("Georgia", size: 28))
                 .foregroundStyle(CelestiaTheme.gold)
 
@@ -109,15 +113,15 @@ struct PaywallView: View {
 
     private var featuresSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("STAR PASS INCLUDES")
+            Text(l.starPassIncludes)
                 .font(.system(size: 11, weight: .bold))
                 .foregroundStyle(CelestiaTheme.gold)
 
-            featureRow("80 ✦ Stardust every month", icon: "sparkle")
-            featureRow("Unlimited chat messages", icon: "bubble.left.fill")
-            featureRow("Detailed daily horoscope", icon: "sun.max.fill")
-            featureRow("Priority reading generation", icon: "bolt.fill")
-            featureRow("Exclusive chart themes", icon: "paintpalette.fill")
+            featureRow(l.monthlyStardust, icon: "sparkle")
+            featureRow(l.unlimitedChat, icon: "bubble.left.fill")
+            featureRow(l.detailedDaily, icon: "sun.max.fill")
+            featureRow(l.priorityReading, icon: "bolt.fill")
+            featureRow(l.exclusiveThemes, icon: "paintpalette.fill")
         }
         .padding()
         .background(
@@ -207,7 +211,7 @@ struct PaywallView: View {
 
     private var stardustSection: some View {
         VStack(spacing: 12) {
-            Text("Or buy Stardust")
+            Text(l.orBuyStardust)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
 
@@ -258,7 +262,7 @@ struct PaywallView: View {
                         ProgressView().tint(CelestiaTheme.navy)
                     } else {
                         Image(systemName: "sparkle")
-                        Text("Subscribe")
+                        Text(l.subscribe)
                             .fontWeight(.bold)
                     }
                 }
@@ -280,19 +284,19 @@ struct PaywallView: View {
             .disabled(selectedProduct == nil || isPurchasing)
             .opacity(selectedProduct == nil ? 0.5 : 1.0)
 
-            Text("Subscriptions auto-renew. Cancel anytime in Settings.")
+            Text(l.autoRenew)
                 .font(.system(size: 11))
                 .foregroundStyle(CelestiaTheme.textSecondary.opacity(0.6))
                 .multilineTextAlignment(.center)
 
             HStack(spacing: 16) {
-                Button("Terms of Use") {}
+                Button(l.termsOfUse) {}
                     .font(.system(size: 11))
                     .foregroundStyle(CelestiaTheme.textSecondary.opacity(0.6))
-                Button("Privacy Policy") {}
+                Button(l.privacyPolicy) {}
                     .font(.system(size: 11))
                     .foregroundStyle(CelestiaTheme.textSecondary.opacity(0.6))
-                Button("Restore Purchases") {
+                Button(l.restorePurchases) {
                     Task { await subscriptionManager.checkSubscriptionStatus() }
                 }
                 .font(.system(size: 11))
@@ -312,7 +316,7 @@ struct PaywallView: View {
                 dismiss()
             }
         } catch {
-            errorMessage = "Purchase failed. Please try again."
+            errorMessage = l.purchaseFailed
         }
         isPurchasing = false
     }
@@ -325,7 +329,7 @@ struct PaywallView: View {
                 }
             }
         } catch {
-            errorMessage = "Purchase failed. Please try again."
+            errorMessage = l.purchaseFailed
         }
     }
 }

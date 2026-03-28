@@ -18,6 +18,9 @@ struct ContentView: View {
     @State private var onboardingLanguage: AppLanguage = .en
     @State private var onboardingStep = 0
 
+    private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
+
     private var hasProfile: Bool {
         profiles.first?.onboardingComplete == true
     }
@@ -75,19 +78,19 @@ struct ContentView: View {
     private var mainTabView: some View {
         TabView {
             TodayView()
-                .tabItem { Label("Today", systemImage: "sun.max.fill") }
+                .tabItem { Label(l.tabToday, systemImage: "sun.max.fill") }
 
             TarotView()
-                .tabItem { Label("Tarot", systemImage: "sparkles") }
+                .tabItem { Label(l.tabTarot, systemImage: "sparkles") }
 
             ChatView()
-                .tabItem { Label("Chat", systemImage: "bubble.left.fill") }
+                .tabItem { Label(l.tabChat, systemImage: "bubble.left.fill") }
 
             CompatibilityView()
-                .tabItem { Label("Match", systemImage: "heart.fill") }
+                .tabItem { Label(l.tabMatch, systemImage: "heart.fill") }
 
             ProfileView()
-                .tabItem { Label("Profile", systemImage: "person.crop.circle") }
+                .tabItem { Label(l.tabProfile, systemImage: "person.crop.circle") }
         }
         .tint(CelestiaTheme.gold)
     }
@@ -114,7 +117,8 @@ struct ContentView: View {
                         birthTime: $onboardingBirthTime,
                         birthCity: $onboardingBirthCity,
                         birthLatitude: $onboardingLatitude,
-                        birthLongitude: $onboardingLongitude
+                        birthLongitude: $onboardingLongitude,
+                        language: onboardingLanguage
                     ) {
                         completeOnboarding()
                     }
@@ -145,11 +149,11 @@ struct ContentView: View {
                 .font(.custom("Georgia", size: 42))
                 .foregroundStyle(CelestiaTheme.gold)
 
-            Text("Your Personal AI Astrologer")
+            Text(l.welcomeSubtitle)
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
 
-            Text("100% on-device · Your data never leaves your phone")
+            Text(l.welcomePrivacy)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary.opacity(0.7))
 
@@ -158,7 +162,7 @@ struct ContentView: View {
             Button {
                 withAnimation { onboardingStep = 1 }
             } label: {
-                Text("Begin Your Journey")
+                Text(l.beginJourney)
                     .font(CelestiaTheme.bodyFont)
                     .fontWeight(.semibold)
                     .foregroundStyle(CelestiaTheme.navy)

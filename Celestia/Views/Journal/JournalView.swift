@@ -4,6 +4,10 @@ import SwiftData
 struct JournalView: View {
     @Query(sort: \Reading.createdAt, order: .reverse) private var readings: [Reading]
 
+    @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
+    private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
+
     @State private var expandedId: UUID?
 
     var body: some View {
@@ -17,7 +21,7 @@ struct JournalView: View {
                     journalList
                 }
             }
-            .navigationTitle("Journal")
+            .navigationTitle(l.journal)
             .navigationBarTitleDisplayMode(.large)
             .toolbarColorScheme(.dark, for: .navigationBar)
         }
@@ -31,11 +35,11 @@ struct JournalView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(CelestiaTheme.purple.opacity(0.5))
 
-            Text("Your Journal Awaits")
+            Text(l.journalAwaits)
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.textPrimary)
 
-            Text("Your readings will appear here as a chronicle of your cosmic journey")
+            Text(l.journalEmpty)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
                 .multilineTextAlignment(.center)
@@ -106,10 +110,10 @@ struct JournalView: View {
                 if isExpanded {
                     // Energy meters
                     VStack(spacing: 6) {
-                        miniMeter("Love", value: reading.energyLove, color: .pink)
-                        miniMeter("Career", value: reading.energyCareer, color: CelestiaTheme.gold)
-                        miniMeter("Health", value: reading.energyHealth, color: .green)
-                        miniMeter("Spiritual", value: reading.energySpiritual, color: CelestiaTheme.purple)
+                        miniMeter(l.love, value: reading.energyLove, color: .pink)
+                        miniMeter(l.career, value: reading.energyCareer, color: CelestiaTheme.gold)
+                        miniMeter(l.health, value: reading.energyHealth, color: .green)
+                        miniMeter(l.spiritual, value: reading.energySpiritual, color: CelestiaTheme.purple)
                     }
                     .padding(.vertical, 4)
 
@@ -219,12 +223,12 @@ struct JournalView: View {
 
     private func labelForType(_ type: String) -> String {
         switch type {
-        case "daily": return "Daily Horoscope"
-        case "weekly": return "Weekly Reading"
-        case "compatibility": return "Compatibility"
-        case "tarot": return "Tarot Reading"
-        case "chat": return "Chat"
-        default: return "Reading"
+        case "daily": return l.dailyHoroscope
+        case "weekly": return l.weeklyReading
+        case "compatibility": return l.compatibility
+        case "tarot": return l.tarotReading
+        case "chat": return l.tabChat
+        default: return l.reading
         }
     }
 

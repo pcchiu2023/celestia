@@ -5,10 +5,13 @@ struct ProfileView: View {
     @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
     @EnvironmentObject var subscriptionManager: SubscriptionManager
     @EnvironmentObject var stardustManager: StardustManager
+    @Environment(\.modelContext) private var modelContext
 
     @State private var showPaywall = false
+    @State private var showLanguagePicker = false
 
     private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
 
     var body: some View {
         NavigationStack {
@@ -30,13 +33,16 @@ struct ProfileView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Profile")
+            .navigationTitle(l.profile)
             .navigationBarTitleDisplayMode(.large)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .sheet(isPresented: $showPaywall) {
                 PaywallView(trigger: "profile")
                     .environmentObject(subscriptionManager)
                     .environmentObject(stardustManager)
+            }
+            .sheet(isPresented: $showLanguagePicker) {
+                languagePickerSheet
             }
         }
     }
@@ -94,7 +100,7 @@ struct ProfileView: View {
 
     private func planetListSection(_ chart: BirthChartData) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Your Planets")
+            Text(l.yourPlanets)
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.gold)
 
@@ -156,7 +162,7 @@ struct ProfileView: View {
             HStack {
                 Image(systemName: "sparkle")
                     .foregroundStyle(CelestiaTheme.gold)
-                Text("Stardust")
+                Text(l.stardust)
                     .font(CelestiaTheme.bodyFont)
                     .fontWeight(.medium)
                     .foregroundStyle(CelestiaTheme.textPrimary)
@@ -169,16 +175,16 @@ struct ProfileView: View {
 
             HStack(spacing: 16) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Streak")
+                    Text(l.streak)
                         .font(CelestiaTheme.captionFont)
                         .foregroundStyle(CelestiaTheme.textSecondary)
-                    Text("\(stardustManager.streak) days")
+                    Text("\(stardustManager.streak) \(l.dayStreak)")
                         .font(CelestiaTheme.bodyFont)
                         .foregroundStyle(CelestiaTheme.textPrimary)
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("Balance")
+                    Text(l.balance)
                         .font(CelestiaTheme.captionFont)
                         .foregroundStyle(CelestiaTheme.textSecondary)
                     Text("\(stardustManager.balance) \u{2726}")
@@ -193,7 +199,7 @@ struct ProfileView: View {
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: "gift.fill")
-                        Text("Claim Daily +2 \u{2726}")
+                        Text(l.claimDaily)
                     }
                     .font(CelestiaTheme.captionFont)
                     .fontWeight(.medium)
@@ -221,7 +227,7 @@ struct ProfileView: View {
             HStack {
                 Image(systemName: subscriptionManager.isSubscribed ? "star.fill" : "star")
                     .foregroundStyle(CelestiaTheme.gold)
-                Text(subscriptionManager.isSubscribed ? "Star Pass Active" : "Free Tier")
+                Text(subscriptionManager.isSubscribed ? l.starPassActive : l.freeTier)
                     .font(CelestiaTheme.bodyFont)
                     .fontWeight(.medium)
                     .foregroundStyle(CelestiaTheme.textPrimary)
@@ -235,7 +241,7 @@ struct ProfileView: View {
                     Button {
                         showPaywall = true
                     } label: {
-                        Text("Upgrade")
+                        Text(l.upgrade)
                             .font(CelestiaTheme.captionFont)
                             .fontWeight(.medium)
                             .foregroundStyle(CelestiaTheme.navy)
@@ -260,12 +266,12 @@ struct ProfileView: View {
             HStack {
                 Image(systemName: "person.2.fill")
                     .foregroundStyle(CelestiaTheme.gold)
-                Text("Refer a Friend")
+                Text(l.referFriend)
                     .font(CelestiaTheme.bodyFont)
                     .fontWeight(.medium)
                     .foregroundStyle(CelestiaTheme.textPrimary)
                 Spacer()
-                Text("Earn 15 \u{2726}")
+                Text("15 \u{2726}")
                     .font(CelestiaTheme.captionFont)
                     .foregroundStyle(CelestiaTheme.gold)
             }
@@ -302,21 +308,28 @@ struct ProfileView: View {
 
     private var settingsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Settings")
+            Text(l.settings)
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.gold)
 
             if let profile {
-                HStack {
-                    Image(systemName: "globe")
-                        .foregroundStyle(CelestiaTheme.textSecondary)
-                    Text("Language")
-                        .font(CelestiaTheme.bodyFont)
-                        .foregroundStyle(CelestiaTheme.textPrimary)
-                    Spacer()
-                    Text(profile.appLanguage.rawValue.uppercased())
-                        .font(CelestiaTheme.captionFont)
-                        .foregroundStyle(CelestiaTheme.textSecondary)
+                Button {
+                    showLanguagePicker = true
+                } label: {
+                    HStack {
+                        Image(systemName: "globe")
+                            .foregroundStyle(CelestiaTheme.textSecondary)
+                        Text(l.language)
+                            .font(CelestiaTheme.bodyFont)
+                            .foregroundStyle(CelestiaTheme.textPrimary)
+                        Spacer()
+                        Text(profile.appLanguage.displayName)
+                            .font(CelestiaTheme.captionFont)
+                            .foregroundStyle(CelestiaTheme.textSecondary)
+                        Image(systemName: "chevron.right")
+                            .font(.caption2)
+                            .foregroundStyle(CelestiaTheme.textSecondary)
+                    }
                 }
 
                 Divider().background(Color.white.opacity(0.05))
@@ -324,7 +337,7 @@ struct ProfileView: View {
                 HStack {
                     Image(systemName: "mappin.circle")
                         .foregroundStyle(CelestiaTheme.textSecondary)
-                    Text("Birth City")
+                    Text(l.birthCity)
                         .font(CelestiaTheme.bodyFont)
                         .foregroundStyle(CelestiaTheme.textPrimary)
                     Spacer()
@@ -339,5 +352,50 @@ struct ProfileView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.white.opacity(0.05))
         )
+    }
+
+    // MARK: - Language Picker Sheet
+
+    private var languagePickerSheet: some View {
+        NavigationStack {
+            ZStack {
+                CelestiaTheme.darkBg.ignoresSafeArea()
+
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                        ForEach(AppLanguage.allCases, id: \.self) { lang in
+                            Button {
+                                profile?.language = lang.rawValue
+                                try? modelContext.save()
+                                showLanguagePicker = false
+                            } label: {
+                                Text(lang.displayName)
+                                    .font(CelestiaTheme.bodyFont)
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(profile?.appLanguage == lang ? CelestiaTheme.darkBg : CelestiaTheme.textPrimary)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(profile?.appLanguage == lang ? CelestiaTheme.gold : Color.white.opacity(0.1))
+                                    )
+                            }
+                        }
+                    }
+                    .padding()
+                }
+            }
+            .navigationTitle(l.chooseLanguage)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(l.cancel) {
+                        showLanguagePicker = false
+                    }
+                    .foregroundStyle(CelestiaTheme.gold)
+                }
+            }
+        }
     }
 }

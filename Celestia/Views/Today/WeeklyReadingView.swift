@@ -12,14 +12,15 @@ struct WeeklyReadingView: View {
     @State private var savedToJournal = false
 
     private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
 
-    private let sectionDefs: [(title: String, icon: String)] = [
-        ("Love & Relationships", "heart.fill"),
-        ("Career & Finances", "briefcase.fill"),
-        ("Health & Wellness", "leaf.fill"),
-        ("Spiritual Growth", "sparkles"),
-        ("Week Ahead Prediction", "eye.fill")
-    ]
+    private var sectionDefs: [(title: String, icon: String)] {[
+        (l.loveRelationships, "heart.fill"),
+        (l.careerFinances, "briefcase.fill"),
+        (l.healthWellness, "leaf.fill"),
+        (l.spiritualGrowth, "sparkles"),
+        (l.weekAhead, "eye.fill")
+    ]}
 
     var body: some View {
         ScrollView {
@@ -40,7 +41,7 @@ struct WeeklyReadingView: View {
             .padding()
         }
         .background(CelestiaTheme.darkBg.ignoresSafeArea())
-        .navigationTitle("Weekly Reading")
+        .navigationTitle(l.weeklyReading)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
     }
@@ -53,11 +54,11 @@ struct WeeklyReadingView: View {
                 .font(.system(size: 36))
                 .foregroundStyle(CelestiaTheme.gold)
 
-            Text("Weekly Deep Reading")
+            Text(l.weeklyDeepReading)
                 .font(CelestiaTheme.headingFont)
                 .foregroundStyle(CelestiaTheme.textPrimary)
 
-            Text("A comprehensive forecast for your week ahead")
+            Text(l.weeklySubtitle)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
         }
@@ -72,7 +73,7 @@ struct WeeklyReadingView: View {
         } label: {
             HStack(spacing: 8) {
                 Image(systemName: "wand.and.stars")
-                Text("Generate Weekly Reading")
+                Text(l.generateWeekly)
                     .fontWeight(.semibold)
             }
             .font(CelestiaTheme.bodyFont)
@@ -100,7 +101,7 @@ struct WeeklyReadingView: View {
                 HStack(spacing: 12) {
                     ProgressView()
                         .tint(CelestiaTheme.gold)
-                    Text("Channeling \(currentSection)...")
+                    Text("\(l.channeling) \(currentSection)...")
                         .font(CelestiaTheme.captionFont)
                         .foregroundStyle(CelestiaTheme.textSecondary)
                 }
@@ -163,7 +164,7 @@ struct WeeklyReadingView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    Text("Saved to Journal")
+                    Text(l.savedToJournal)
                         .font(CelestiaTheme.captionFont)
                         .foregroundStyle(CelestiaTheme.textSecondary)
                 }
@@ -173,7 +174,7 @@ struct WeeklyReadingView: View {
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: "bookmark")
-                        Text("Save to Journal")
+                        Text(l.saveToJournal)
                     }
                     .font(CelestiaTheme.captionFont)
                     .foregroundStyle(CelestiaTheme.gold)

@@ -13,6 +13,7 @@ struct ChatView: View {
     @State private var showPaywall = false
 
     private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
     private var isSubscriber: Bool { subscriptionManager.isSubscribed }
 
     // Daily free message count
@@ -32,8 +33,8 @@ struct ChatView: View {
     }
 
     private var messageStatusText: String {
-        if isSubscriber { return "Unlimited ✧" }
-        if todayMessageCount < 1 { return "1 free today" }
+        if isSubscriber { return l.unlimited }
+        if todayMessageCount < 1 { return l.oneFreeToday }
         return "\(stardustManager.balance) ✦ available"
     }
 
@@ -44,7 +45,7 @@ struct ChatView: View {
             VStack(spacing: 0) {
                 // Header
                 HStack {
-                    Text("✧ Celestia")
+                    Text(l.chatCelestia)
                         .font(CelestiaTheme.subheadingFont)
                         .foregroundColor(CelestiaTheme.gold)
                     Spacer()
@@ -66,7 +67,7 @@ struct ChatView: View {
                             }
                             if isGenerating {
                                 HStack {
-                                    CosmicLoadingView(message: "Consulting the cosmos...")
+                                    CosmicLoadingView(message: l.consultingCosmos)
                                         .scaleEffect(0.5)
                                         .frame(height: 80)
                                     Spacer()
@@ -85,7 +86,7 @@ struct ChatView: View {
 
                 // Input
                 HStack(spacing: 12) {
-                    TextField("Ask Celestia...", text: $inputText, axis: .vertical)
+                    TextField(l.askCelestia, text: $inputText, axis: .vertical)
                         .textFieldStyle(.plain)
                         .padding(12)
                         .background(Color.white.opacity(0.1))

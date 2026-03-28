@@ -23,6 +23,8 @@ struct ReferralView: View {
         ReferralEvent.referralsThisMonth(in: modelContext)
     }
 
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -36,7 +38,7 @@ struct ReferralView: View {
             .padding()
         }
         .background(CelestiaTheme.darkBg)
-        .navigationTitle("Share the Stars")
+        .navigationTitle(l.shareStars)
     }
 
     // MARK: - Header
@@ -47,11 +49,11 @@ struct ReferralView: View {
                 .font(.system(size: 48))
                 .foregroundStyle(CelestiaTheme.gold)
 
-            Text("Invite Friends to Celestia")
+            Text(l.inviteFriends)
                 .font(.title2.bold())
                 .foregroundStyle(.white)
 
-            Text("Both you and your friend earn 15 ✦ Stardust when they join and complete their birth chart.")
+            Text(l.referralReward)
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(0.7))
                 .multilineTextAlignment(.center)
@@ -66,7 +68,7 @@ struct ReferralView: View {
                 Text("\(referralsThisMonth)")
                     .font(.title.bold())
                     .foregroundStyle(CelestiaTheme.gold)
-                Text("This Month")
+                Text(l.thisMonth)
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.6))
             }
@@ -79,7 +81,7 @@ struct ReferralView: View {
                 Text("\(ReferralEvent.monthlyCapacity - referralsThisMonth)")
                     .font(.title.bold())
                     .foregroundStyle(CelestiaTheme.purple)
-                Text("Remaining")
+                Text(l.remaining)
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.6))
             }
@@ -92,7 +94,7 @@ struct ReferralView: View {
                 Text("\(referrals.count * ReferralEvent.rewardPerReferral) ✦")
                     .font(.title.bold())
                     .foregroundStyle(.yellow)
-                Text("Total Earned")
+                Text(l.totalEarned)
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.6))
             }
@@ -121,7 +123,7 @@ struct ReferralView: View {
                             showCopied = false
                         }
                     } label: {
-                        Label(showCopied ? "Copied!" : "Copy", systemImage: showCopied ? "checkmark" : "doc.on.doc")
+                        Label(showCopied ? l.copied : l.copy, systemImage: showCopied ? "checkmark" : "doc.on.doc")
                             .font(.subheadline.bold())
                             .foregroundStyle(CelestiaTheme.gold)
                     }
@@ -137,7 +139,7 @@ struct ReferralView: View {
                 subject: Text("Celestia — AI Astrology"),
                 message: Text("Check out Celestia! Get your personalized AI astrology readings. Use my referral link to get 15 free Stardust ✦")
             ) {
-                Label("Share Invite Link", systemImage: "square.and.arrow.up")
+                Label(l.shareInviteLink, systemImage: "square.and.arrow.up")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
@@ -158,7 +160,7 @@ struct ReferralView: View {
 
     private var historySection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Referral History")
+            Text(l.referralHistory)
                 .font(.headline)
                 .foregroundStyle(.white)
 
@@ -167,7 +169,7 @@ struct ReferralView: View {
                     Image(systemName: "person.badge.plus")
                         .foregroundStyle(CelestiaTheme.gold)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Friend joined")
+                        Text(l.friendJoined)
                             .font(.subheadline)
                             .foregroundStyle(.white)
                         Text(event.createdAt.formatted(date: .abbreviated, time: .omitted))

@@ -11,6 +11,10 @@ struct CompatibilityView: View {
     @State private var showAddSheet = false
     @State private var showPaywall = false
 
+    @Query(sort: \UserProfile.createdAt, order: .reverse) private var profiles: [UserProfile]
+    private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
+
     private let readingCost = StardustManager.costs["compatibility"] ?? 5
 
     var body: some View {
@@ -24,7 +28,7 @@ struct CompatibilityView: View {
                     contactList
                 }
             }
-            .navigationTitle("Compatibility")
+            .navigationTitle(l.compatibility)
             .navigationBarTitleDisplayMode(.large)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
@@ -54,11 +58,11 @@ struct CompatibilityView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(CelestiaTheme.purple.opacity(0.5))
 
-            Text("No Connections Yet")
+            Text(l.noConnections)
                 .font(CelestiaTheme.subheadingFont)
                 .foregroundStyle(CelestiaTheme.textPrimary)
 
-            Text("Add someone to discover your cosmic compatibility")
+            Text(l.addSomeone)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
                 .multilineTextAlignment(.center)
@@ -68,7 +72,7 @@ struct CompatibilityView: View {
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "plus")
-                    Text("Add Contact")
+                    Text(l.addContact)
                 }
                 .font(CelestiaTheme.bodyFont)
                 .foregroundStyle(CelestiaTheme.navy)
@@ -176,7 +180,7 @@ struct CompatibilityView: View {
             Button(role: .destructive) {
                 modelContext.delete(contact)
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label(l.delete, systemImage: "trash")
             }
         }
     }

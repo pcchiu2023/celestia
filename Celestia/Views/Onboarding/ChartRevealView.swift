@@ -11,6 +11,8 @@ struct ChartRevealView: View {
     @State private var rotation: Double = -180
     @State private var scale: CGFloat = 0.3
 
+    private var l: L10n { L10n(lang: profile.appLanguage) }
+
     var body: some View {
         ZStack {
             CelestiaTheme.darkBg.ignoresSafeArea()
@@ -54,7 +56,7 @@ struct ChartRevealView: View {
                                 .foregroundStyle(CelestiaTheme.gold)
                         }
 
-                        Text("Your cosmic blueprint is ready")
+                        Text(l.cosmicBlueprint)
                             .font(.subheadline)
                             .foregroundStyle(.white.opacity(0.7))
 
@@ -74,7 +76,7 @@ struct ChartRevealView: View {
                 // Continue button
                 if showDetails {
                     Button(action: onContinue) {
-                        Text("Explore Your Stars")
+                        Text(l.exploreStars)
                             .font(.headline)
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)

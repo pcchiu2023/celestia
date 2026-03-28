@@ -13,6 +13,7 @@ struct TodayView: View {
     @State private var showRewardBanner = false
 
     private var profile: UserProfile? { profiles.first }
+    private var l: L10n { L10n(lang: profile?.appLanguage ?? .en) }
     private var isSubscriber: Bool { subscriptionManager.isSubscribed }
 
     var body: some View {
@@ -26,7 +27,7 @@ struct TodayView: View {
 
                     // Header
                     if let profile {
-                        Text("☽ Good \(timeOfDay), \(profile.name)")
+                        Text(l.goodGreeting(timeOfDay, profile.name))
                             .font(CelestiaTheme.subheadingFont)
                             .foregroundColor(CelestiaTheme.textPrimary)
 
@@ -44,7 +45,7 @@ struct TodayView: View {
 
                     // Daily Reading Card
                     if isLoading {
-                        CosmicLoadingView(message: "Reading the stars...")
+                        CosmicLoadingView(message: l.readingStars)
                     } else if let reading = todayReading {
                         ReadingRevealView {
                             VStack(spacing: 16) {
@@ -74,7 +75,7 @@ struct TodayView: View {
             Text("\(stardustManager.balance)")
                 .font(.system(size: 16, weight: .bold, design: .rounded))
                 .foregroundStyle(CelestiaTheme.gold)
-            Text("Stardust")
+            Text(l.stardust)
                 .font(CelestiaTheme.captionFont)
                 .foregroundStyle(CelestiaTheme.textSecondary)
 
@@ -85,7 +86,7 @@ struct TodayView: View {
                     Image(systemName: "flame.fill")
                         .foregroundStyle(.orange)
                         .font(.system(size: 12))
-                    Text("\(stardustManager.streak) day streak")
+                    Text("\(stardustManager.streak) \(l.dayStreak)")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(CelestiaTheme.textSecondary)
                 }
@@ -104,7 +105,7 @@ struct TodayView: View {
             Image(systemName: "gift.fill")
                 .foregroundStyle(CelestiaTheme.gold)
             VStack(alignment: .leading, spacing: 2) {
-                Text("Daily Stardust!")
+                Text(l.dailyStardust)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(CelestiaTheme.textPrimary)
                 Text("+\(dailyRewardEarned) ✦ earned")
@@ -125,7 +126,7 @@ struct TodayView: View {
 
     private func readingCard(_ reading: ParsedReading) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("TODAY'S READING")
+            Text(l.todaysReading)
                 .font(CelestiaTheme.captionFont)
                 .foregroundColor(CelestiaTheme.gold)
 
@@ -150,14 +151,14 @@ struct TodayView: View {
 
     private func energyMeters(_ reading: ParsedReading) -> some View {
         VStack(spacing: 12) {
-            Text("COSMIC ENERGY")
+            Text(l.cosmicEnergy)
                 .font(CelestiaTheme.captionFont)
                 .foregroundColor(CelestiaTheme.gold)
 
-            EnergyMeterView(label: "Love", value: reading.energyLove, color: .pink)
-            EnergyMeterView(label: "Career", value: reading.energyCareer, color: CelestiaTheme.gold)
-            EnergyMeterView(label: "Health", value: reading.energyHealth, color: .green)
-            EnergyMeterView(label: "Spiritual", value: reading.energySpiritual, color: CelestiaTheme.purple)
+            EnergyMeterView(label: l.love, value: reading.energyLove, color: .pink)
+            EnergyMeterView(label: l.career, value: reading.energyCareer, color: CelestiaTheme.gold)
+            EnergyMeterView(label: l.health, value: reading.energyHealth, color: .green)
+            EnergyMeterView(label: l.spiritual, value: reading.energySpiritual, color: CelestiaTheme.purple)
         }
         .padding(20)
         .background(Color.white.opacity(0.05))
