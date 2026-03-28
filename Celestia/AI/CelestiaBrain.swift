@@ -35,9 +35,6 @@ final class CelestiaBrain: ObservableObject {
         }
 
         let modelConfig = ModelConfiguration(
-            id: "mlx-community/Qwen3.5-4B-MLX-4bit",
-            defaultPrompt: "",
-            overrideTokenizer: nil,
             directory: modelURL
         )
 
