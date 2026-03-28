@@ -1,5 +1,5 @@
 import Foundation
-import MLXVLM
+import MLXLLM
 import MLXLMCommon
 import MLX
 
@@ -40,7 +40,7 @@ final class CelestiaBrain: ObservableObject {
 
         do {
             loadingProgress = "Loading star charts..."
-            container = try await VLMModelFactory.shared.loadContainer(
+            container = try await LLMModelFactory.shared.loadContainer(
                 configuration: modelConfig
             ) { progress in
                 Task { @MainActor in
