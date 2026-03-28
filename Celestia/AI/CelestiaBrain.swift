@@ -12,12 +12,7 @@ final class CelestiaBrain: ObservableObject {
 
     private var container: ModelContainer?
 
-    // Qwen 3.5 4B — natively multimodal (VLM architecture), used text-only for astrology
-    private let modelConfig = ModelConfiguration(
-        id: "mlx-community/Qwen3.5-4B-MLX-4bit"
-    )
-
-    // MARK: - Model Loading
+    // MARK: - Model Loading (from bundled resources)
 
     func loadModel() async {
         #if targetEnvironment(simulator)
@@ -31,17 +26,29 @@ final class CelestiaBrain: ObservableObject {
 
         GPU.set(cacheLimit: 2 * 1024 * 1024 * 1024) // 2GB GPU cache for 4B model
 
+        // Load from bundled model directory
+        guard let modelURL = Bundle.main.resourceURL?.appendingPathComponent("MLXModel") else {
+            loadingProgress = "The stars are resting"
+            modelLoadFailed = true
+            isModelLoaded = true
+            return
+        }
+
+        let modelConfig = ModelConfiguration(
+            id: "mlx-community/Qwen3.5-4B-MLX-4bit",
+            defaultPrompt: "",
+            overrideTokenizer: nil,
+            directory: modelURL
+        )
+
         do {
+            loadingProgress = "Loading star charts..."
             container = try await VLMModelFactory.shared.loadContainer(
                 configuration: modelConfig
             ) { progress in
                 Task { @MainActor in
                     let pct = Int(progress.fractionCompleted * 100)
-                    if progress.fractionCompleted < 1.0 {
-                        self.loadingProgress = "Downloading star charts... \(pct)%"
-                    } else {
-                        self.loadingProgress = "Aligning the cosmos..."
-                    }
+                    self.loadingProgress = "Aligning the cosmos... \(pct)%"
                 }
             }
             modelLoadFailed = false

@@ -24,15 +24,48 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            if hasProfile {
+            if !brain.isModelLoaded {
+                modelLoadingView
+            } else if hasProfile {
                 mainTabView
             } else {
                 onboardingView
             }
         }
-        .onAppear {
-            if !hasProfile {
-                showOnboarding = true
+        .task {
+            if !brain.isModelLoaded {
+                await brain.loadModel()
+            }
+        }
+    }
+
+    // MARK: - Model Loading Screen
+
+    private var modelLoadingView: some View {
+        ZStack {
+            CelestiaTheme.darkBg.ignoresSafeArea()
+            StarFieldView()
+
+            VStack(spacing: 32) {
+                Spacer()
+
+                Image(systemName: "star.circle.fill")
+                    .font(.system(size: 80))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [CelestiaTheme.gold, CelestiaTheme.purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+
+                Text("Celestia")
+                    .font(.custom("Georgia", size: 42))
+                    .foregroundStyle(CelestiaTheme.gold)
+
+                CosmicLoadingView(message: brain.loadingProgress)
+
+                Spacer()
             }
         }
     }
