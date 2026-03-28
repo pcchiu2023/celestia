@@ -34,14 +34,14 @@ struct ChartRevealView: View {
                         .frame(width: 300, height: 300)
                         .opacity(showChart ? 1 : 0)
 
-                    // Chart wheel placeholder
+                    // Chart wheel
                     if let chart = profile.chartData {
                         ChartWheelView(chart: chart)
+                            .frame(width: 240, height: 240)
+                            .rotationEffect(.degrees(rotation))
+                            .scaleEffect(scale)
+                            .opacity(showChart ? 1 : 0)
                     }
-                        .frame(width: 240, height: 240)
-                        .rotationEffect(.degrees(rotation))
-                        .scaleEffect(scale)
-                        .opacity(showChart ? 1 : 0)
                 }
 
                 // Sign + details
