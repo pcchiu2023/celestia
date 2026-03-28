@@ -251,16 +251,16 @@ enum AppLanguage: String, Codable, CaseIterable {
 
     var promptInstruction: String {
         switch self {
-        case .en: return "Respond in English."
-        case .es: return "Responde en español."
-        case .pt: return "Responda em português."
-        case .ja: return "日本語で回答してください。"
-        case .ko: return "한국어로 답변해 주세요."
-        case .fr: return "Répondez en français."
-        case .hi: return "हिन्दी में उत्तर दें।"
-        case .de: return "Antworten Sie auf Deutsch."
-        case .zhHant: return "請用繁體中文回答。"
-        case .zhHans: return "请用简体中文回答。"
+        case .en: return "IMPORTANT: You MUST respond entirely in English regardless of what language the user writes in."
+        case .es: return "IMPORTANTE: DEBES responder completamente en español sin importar en qué idioma escriba el usuario."
+        case .pt: return "IMPORTANTE: Você DEVE responder inteiramente em português, independente do idioma do usuário."
+        case .ja: return "重要：ユーザーがどの言語で書いても、必ず日本語で回答してください。"
+        case .ko: return "중요: 사용자가 어떤 언어로 쓰든 반드시 한국어로 답변해 주세요."
+        case .fr: return "IMPORTANT : Vous DEVEZ répondre entièrement en français quel que soit la langue de l'utilisateur."
+        case .hi: return "महत्वपूर्ण: उपयोगकर्ता किसी भी भाषा में लिखे, आपको पूरी तरह हिन्दी में उत्तर देना होगा।"
+        case .de: return "WICHTIG: Sie MÜSSEN vollständig auf Deutsch antworten, unabhängig von der Sprache des Nutzers."
+        case .zhHant: return "重要：無論用戶使用什麼語言，您必須完全使用繁體中文回答。"
+        case .zhHans: return "重要：无论用户使用什么语言，您必须完全使用简体中文回答。"
         }
     }
 }
